@@ -1,0 +1,11 @@
+awk, numtest: 0.117s, 0 errs
+lua, numtest: 0.552s, 0 errs
+hashed lua, numtest: 0.916s, 0 errs
+
+awk, gentest: 0.617s, 0 errs
+lua, gentest: 2.182s, 0 errs
+hashed lua, gentest: 3.543s, 271 errs
+
+awk, dicttest: 0.082s, 0 errs
+lua, dicttest: 0.251s, 0 errs
+hashed lua, dicttest: 0.567s, 1 err
