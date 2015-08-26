@@ -1,3 +1,8 @@
+numtest: seq 1 100000 >nums
+gentest: gen zzzz >gentest
+dicttest: cp ~/proj/finished/1wf/dict dicttest
+mutest: muring with mui, wait until it dies, cp ~/prog/ring/mu mutest
+
 awk, numtest: 0.117s, 0 errs
 lua, numtest: 0.552s, 0 errs
 hashed lua, numtest: 0.916s, 0 errs
