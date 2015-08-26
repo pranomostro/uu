@@ -9,3 +9,7 @@ hashed lua, gentest: 3.543s, 271 errs
 awk, dicttest: 0.082s, 0 errs
 lua, dicttest: 0.251s, 0 errs
 hashed lua, dicttest: 0.567s, 1 err
+
+awk, mutest: 12.177s, 0 errs
+lua, mutest: 39.374s, 0 errs
+hashed lua, mutest: 2m44.828s, 2880 errs
