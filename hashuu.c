@@ -7,19 +7,19 @@
 #define INITLEN 2
 
 long hash(char* s, size_t len);
-long* resize(long* data, size_t old, size_t new);
 int linsearch(long key, long* data, size_t len);
+long* resize(long* data, size_t old, size_t new);
 
 int main(int argc, char** argv)
 {
 	size_t hashlen=INITLEN, pos=0;
 	long hashval;
-	char s[BUFSIZ];
+	char input[BUFSIZ];
 	long* hashes=(long*)malloc(hashlen*sizeof(long));
 
-	while(fgets(s, BUFSIZ, stdin)!=NULL)
+	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
-		hashval=hash(s, strlen(s));
+		hashval=hash(input, strlen(input));
 
 		if(linsearch(hashval, hashes, pos))
 		{
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 					break;
 			}
 			hashes[pos++]=hashval;
-			printf(s);
+			printf(input);
 		}
 	}
 
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 long hash(char* s, size_t len)
 {
 	int h=0, i=1;
-	while(*s&&i<len) h+=(*s++)<<4*i++;
+	while(*s&&i<len) h+=((*s++)<<4)*i++;
 	return h;
 }
 
