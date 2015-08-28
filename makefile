@@ -1,7 +1,11 @@
-all: llwauu llwmuu
+BINS=llwauu llwmuu
+CC=gcc
+CFLAGS=-Wall -g
 
-llwauu: llwauu.c
-	gcc -Wall -g llwauu.c -o llwauu
+all: ${BINS}
 
-llwmuu: llwmuu.c
-	gcc -Wall -g llwmuu.c -o llwmuu
+%: %.c
+	${CC} ${CFLAGS} $< -o $@
+
+clean:
+	rm -f ${BINS}
