@@ -17,7 +17,7 @@ int searchline(char* str);
 int main(int argc, char** argv)
 {
 	char s[256]; /*Maximum line length*/
-	struct Line* tmp;
+	struct Line* tmp, * it;
 
 	input=NULL;
 
@@ -31,6 +31,13 @@ int main(int argc, char** argv)
 			input=tmp;
 			printf(s);
 		}
+
+	for(it=input; it!=NULL; it=tmp)
+	{
+		tmp=it->next;
+		free(it->str);
+		free(it);
+	}
 
 	return 0;
 }

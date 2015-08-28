@@ -29,6 +29,11 @@ int main(int argc, char** argv)
 		if(!searchline(s))
 		{
 			tmp=(struct Line*)malloc(sizeof(struct Line*));
+			/*
+				For some weird reason, end->next is overwritten here.
+				Of course this is bad, but I haven't been able to
+				find out why this happens.
+			*/
 			strncpy(tmp->str, s, strlen(s)+2);
 			tmp->next=input;
 			input=tmp;
