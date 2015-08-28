@@ -4,32 +4,33 @@
 #include <stdio.h>
 #include <string.h>
 
-#define INITLEN 16
+#define INITLEN 2
 
-long hashs(char* s, size_t len);
+long hash(char* s, size_t len);
 long* resize(long* data, size_t old, size_t new);
 int linsearch(long key, long* data, size_t len);
 
 int main(int argc, char** argv)
 {
 	size_t hashlen=INITLEN, pos=0;
-	long hash;
+	long hashval;
 	char s[BUFSIZ];
-	long* hashes=(long*)malloc(INITLEN*sizeof(long));
+	long* hashes=(long*)malloc(hashlen*sizeof(long));
 
 	while(fgets(s, BUFSIZ, stdin)!=NULL)
 	{
-		hash=hashs(s, strlen(s));
-		if(linsearch(hash, hashes, pos))
+		hashval=hash(s, strlen(s));
+
+		if(linsearch(hashval, hashes, pos))
 		{
-			if(pos>=hashlen)
+			if(pos==hashlen)
 			{
 				hashlen*=2;
 				hashes=resize(hashes, pos, hashlen);
 				if(hashes==NULL)
 					break;
 			}
-			hashes[pos++]=hash;
+			hashes[pos++]=hashval;
 			printf(s);
 		}
 	}
@@ -39,9 +40,7 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-/*taken from 9base, rc/var.c*/
-
-long hashs(char* s, size_t len)
+long hash(char* s, size_t len)
 {
 	int h=0, i=1;
 	while(*s&&i<len) h+=(*s++)<<4*i++;
