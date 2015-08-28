@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 				Of course this is bad, but I haven't been able to
 				find out why this happens.
 			*/
-			strncpy(tmp->str, s, strlen(s)+2);
+			strncpy(tmp->str, s, strlen(s)+1);
 			tmp->next=input;
 			input=tmp;
 			printf(s);
