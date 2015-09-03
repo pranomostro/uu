@@ -1,4 +1,4 @@
-BINS=llwauu llwmuu hashuu
+BINS=llwauu llwmuu ahashuu
 CC=gcc
 CFLAGS=-Wall -g
 
