@@ -7,17 +7,17 @@
 
 #define INITLEN 256
 
-int linsearch(long key, long* data, size_t len);
-long* resize(long* data, size_t old, size_t new);
+int linsearch(uint32_t key, uint32_t* data, size_t len);
+uint32_t* resize(uint32_t* data, size_t old, size_t new);
 
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
 int main(int argc, char** argv)
 {
 	size_t hashlen=INITLEN, pos=0;
-	long hashval;
+	uint32_t hashval;
 	char input[BUFSIZ];
-	long* hashes=(long*)malloc(hashlen*sizeof(long));
+	uint32_t* hashes=(uint32_t*)malloc(hashlen*sizeof(uint32_t));
 
 	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
@@ -42,13 +42,13 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-long* resize(long* data, size_t old, size_t new)
+uint32_t* resize(uint32_t* data, size_t old, size_t new)
 {
 	size_t c;
-	long* na=(long*)realloc(data, new*sizeof(long));
+	uint32_t* na=(uint32_t*)realloc(data, new*sizeof(uint32_t));
 	if(na==NULL)
 	{
-		na=(long*)malloc(new*sizeof(long));
+		na=(uint32_t*)malloc(new*sizeof(uint32_t));
 		if(na==NULL)
 		{
 			fprintf(stderr, "error: no memory left, exiting.\n");
@@ -60,7 +60,7 @@ long* resize(long* data, size_t old, size_t new)
 	return na;
 }
 
-int linsearch(long key, long* data, size_t len)
+int linsearch(uint32_t key, uint32_t* data, size_t len)
 {
 	while(len-->0)
 		if(data[len]==key)
