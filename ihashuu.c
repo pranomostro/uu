@@ -1,4 +1,4 @@
-/*unsorted uniq with hashes in an array, hashes are appended*/
+/*unsorted uniq with hashes in an array, hashes are inserted*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,22 +7,23 @@
 
 #define INITLEN 256
 
-int linsearch(uint32_t key, uint32_t* data, size_t len);
+void shiftback(uint32_t* data, size_t pos);
+size_t binfind(uint32_t key, uint32_t* data, size_t len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
-uint32_t genhash(const char *key, uint32_t len, uint32_t seed);
+uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
 int main(int argc, char** argv)
 {
 	size_t hashlen=INITLEN, pos=0;
+	uint32_t hashval;
 	char input[BUFSIZ];
-	uint32_t linehash;
-	uint32_t* hashes=(uint32_t*)calloc(hashlen, sizeof(uint32_t));
+	uint32_t* hashes=(uint32_t*)malloc(hashlen*sizeof(uint32_t));
 
 	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
-		linehash=genhash(input, strlen(input), 0xA17A1111);
+		hashval=hash(input, strlen(input), 0xA17A1111);
 
-		if(linsearch(linehash, hashes, pos))
+		if(linsearch(hashval, hashes, pos))
 		{
 			if(pos==hashlen)
 			{
@@ -31,7 +32,7 @@ int main(int argc, char** argv)
 				if(hashes==NULL)
 					break;
 			}
-			hashes[pos++]=linehash;
+			hashes[pos++]=hashval;
 			printf(input);
 		}
 	}
@@ -39,6 +40,26 @@ int main(int argc, char** argv)
 	free(hashes);
 
 	return 0;
+}
+
+/*Taken from »The C programming language«, adapted for my needs*/
+
+size_t binfind(uint32_t key, uint32_t* data, size_t len)
+{
+	size_t low, high, mid;
+	low=0;
+	high=len-1;
+	while(low<=high)
+	{
+		mid=(low+high)/2;
+		if(data[mid]<key)
+			low=mid+1;
+		else if(data[mid]>key)
+			high=mid-1;
+		else
+			break;
+	}
+	return data[mid]<key?mid+1:mid;
 }
 
 uint32_t* resize(uint32_t* data, size_t old, size_t new)
@@ -67,7 +88,7 @@ int linsearch(uint32_t key, uint32_t* data, size_t len)
 	return 1;
 }
 
-uint32_t genhash(const char *key, uint32_t len, uint32_t seed) {
+uint32_t hash(const char *key, uint32_t len, uint32_t seed) {
 	static const uint32_t c1 = 0xcc9e2d51;
 	static const uint32_t c2 = 0x1b873593;
 	static const uint32_t r1 = 15;
