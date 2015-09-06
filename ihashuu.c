@@ -1,5 +1,5 @@
 /*unsorted uniq with hashes in an array, hashes are inserted*/
-/*At the moment, it crashes after 33788 elements in the array in shiftback.*/
+/*At the moment, it crashes after ~30000 elements in the array in shiftback.*/
 
 #include <stdlib.h>
 #include <stdio.h>
