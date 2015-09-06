@@ -1,4 +1,5 @@
 /*unsorted uniq with hashes in an array, hashes are inserted*/
+/*At the moment, it crashes after 33788 elements in the array in shiftback.*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,33 +8,37 @@
 
 #define INITLEN 256
 
-void shiftback(uint32_t* data, size_t pos);
-size_t binfind(uint32_t key, uint32_t* data, size_t len);
+void shiftback(uint32_t* data, size_t pos, size_t len);
+int binfind(uint32_t key, uint32_t* data, int len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
 int main(int argc, char** argv)
 {
-	size_t hashlen=INITLEN, pos=0;
-	uint32_t hashval;
+	size_t hashlen=INITLEN, pos, len, maxsize;
 	char input[BUFSIZ];
-	uint32_t* hashes=(uint32_t*)malloc(hashlen*sizeof(uint32_t));
+	uint32_t hashval;
+	uint32_t* hashes=(uint32_t*)calloc(hashlen, sizeof(uint32_t));
+
+	len=0;
+	maxsize=INITLEN;
 
 	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
 		hashval=hash(input, strlen(input), 0xA17A1111);
+		pos=binfind(hashval, hashes, len);
 
-		if(linsearch(hashval, hashes, pos))
+		if(hashes[pos]!=hashval)
 		{
-			if(pos==hashlen)
+			if(len>=maxsize-1)
 			{
-				hashlen*=2;
-				hashes=resize(hashes, pos, hashlen);
-				if(hashes==NULL)
-					break;
+				maxsize=len*2;
+				resize(hashes, len, maxsize);
 			}
-			hashes[pos++]=hashval;
+			shiftback(hashes, pos, len);
+			hashes[pos]=hashval;
 			printf(input);
+			len++;
 		}
 	}
 
@@ -42,22 +47,32 @@ int main(int argc, char** argv)
 	return 0;
 }
 
+void shiftback(uint32_t* data, size_t pos, size_t len)
+{
+	while(len-->pos)
+		data[len+1]=data[len];
+}
+
 /*Taken from »The C programming language«, adapted for my needs*/
 
-size_t binfind(uint32_t key, uint32_t* data, size_t len)
+int binfind(uint32_t key, uint32_t* data, int len)
 {
-	size_t low, high, mid;
+	int low, high, mid;
 	low=0;
 	high=len-1;
+
+	if(data==NULL||len<=0)
+		return 0;
+
 	while(low<=high)
 	{
 		mid=(low+high)/2;
 		if(data[mid]<key)
 			low=mid+1;
-		else if(data[mid]>key)
-			high=mid-1;
-		else
+		else if(data[mid]==key)
 			break;
+		else
+			high=mid-1;
 	}
 	return data[mid]<key?mid+1:mid;
 }
