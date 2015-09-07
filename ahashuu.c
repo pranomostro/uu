@@ -55,6 +55,7 @@ uint32_t* resize(uint32_t* data, size_t old, size_t new)
 		}
 		for(c=0; c<=old; c++)
 			na[c]=data[c];
+		free(data);
 	}
 	return na;
 }

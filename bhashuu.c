@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 #define INITLEN 256
-#define BUCKETS 10000
+#define BUCKETS 1000
 
 void shiftback(uint32_t* data, size_t pos, size_t len);
 int binfind(uint32_t key, uint32_t* data, int len);
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	for(i=0; i<=BUCKETS; i++)
+	for(i=0; i<=BUCKETS-1; i++)
 		free(hashes[i]);
 
 	return 0;
@@ -102,16 +102,9 @@ uint32_t* resize(uint32_t* data, size_t old, size_t new)
 		}
 		for(c=0; c<=old; c++)
 			na[c]=data[c];
+		free(data);
 	}
 	return na;
-}
-
-int linsearch(uint32_t key, uint32_t* data, size_t len)
-{
-	while(len-->0)
-		if(data[len]==key)
-			return 0;
-	return 1;
 }
 
 uint32_t hash(const char *key, uint32_t len, uint32_t seed) {
