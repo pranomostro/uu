@@ -7,6 +7,10 @@ awk, numtest: 0.117s, 0 errs
 lua, numtest: 0.552s, 0 errs
 hashed lua, numtest: 0.916s, 0 errs
 c linked list malloc()'d: 102.652s, 0 errs
+c array with linear search and appending, without optimization: 26.188s, 2 errs
+	with O3: 4.168s, 2 errs
+c array with binary search and insertion, without optimization: 16.414s, 2 errs
+	with O3: 1.062s, 2 errs
 
 awk, gentest: 0.617s, 0 errs
 lua, gentest: 2.182s, 0 errs

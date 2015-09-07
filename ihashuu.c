@@ -1,5 +1,4 @@
 /*unsorted uniq with hashes in an array, hashes are inserted*/
-/*At the moment, it crashes after ~30000 elements in the array in shiftback.*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,7 +32,7 @@ int main(int argc, char** argv)
 			if(len>=maxsize-1)
 			{
 				maxsize=len*2;
-				resize(hashes, len, maxsize);
+				hashes=resize(hashes, len, maxsize);
 			}
 			shiftback(hashes, pos, len);
 			hashes[pos]=hashval;
