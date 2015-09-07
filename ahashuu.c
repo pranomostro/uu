@@ -13,10 +13,10 @@ uint32_t genhash(const char *key, uint32_t len, uint32_t seed);
 
 int main(int argc, char** argv)
 {
-	size_t hashlen=INITLEN, pos=0;
+	size_t len=INITLEN, pos=0;
 	char input[BUFSIZ];
 	uint32_t linehash;
-	uint32_t* hashes=(uint32_t*)calloc(hashlen, sizeof(uint32_t));
+	uint32_t* hashes=(uint32_t*)calloc(len, sizeof(uint32_t));
 
 	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
@@ -24,10 +24,10 @@ int main(int argc, char** argv)
 
 		if(linsearch(linehash, hashes, pos))
 		{
-			if(pos==hashlen)
+			if(pos==len)
 			{
-				hashlen*=2;
-				hashes=resize(hashes, pos, hashlen);
+				len*=2;
+				hashes=resize(hashes, pos, len);
 				if(hashes==NULL)
 					break;
 			}

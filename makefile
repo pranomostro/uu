@@ -1,6 +1,6 @@
-BINS=llwmuu ahashuu ihashuu
+BINS=llwmuu ahashuu ihashuu bhashuu
 CC=gcc
-CFLAGS=-Wall -s -O3 -funroll-loops
+CFLAGS=-Wall -s
 
 all: ${BINS}
 
