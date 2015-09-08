@@ -103,7 +103,10 @@ uint32_t* resize(uint32_t* data, size_t old, size_t new)
 	return na;
 }
 
-uint32_t hash(const char *key, uint32_t len, uint32_t seed) {
+/*Murmur3 hashing algorithm, taken from Wikipedia. Tested with different datasets, don't worry.*/
+
+uint32_t hash(const char *key, uint32_t len, uint32_t seed)
+{
 	static const uint32_t c1 = 0xcc9e2d51;
 	static const uint32_t c2 = 0x1b873593;
 	static const uint32_t r1 = 15;
