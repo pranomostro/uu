@@ -1,8 +1,4 @@
 /*unsorted uniq with hashes in an array of pointers, hashes are inserted*/
-/*
-	At the moment, with numtest, it does not print 600 numbers which are needed,
-	and terminates with a segfault on EOF, alongside with some other problems.
-*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,7 +6,7 @@
 #include <stdint.h>
 
 #define INITLEN 256
-#define BUCKETS 1000
+#define BUCKETS 10000
 
 void shiftback(uint32_t* data, size_t pos, size_t len);
 int binfind(uint32_t key, uint32_t* data, int len);
@@ -20,17 +16,17 @@ uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 int main(int argc, char** argv)
 {
 	int i, bucket;
-	size_t pos, maxsize, len[BUCKETS];
+	size_t pos, maxsize[BUCKETS], len[BUCKETS];
 	char input[BUFSIZ];
 	uint32_t hashval;
 	uint32_t* hashes[BUCKETS];
 
 	for(i=0; i<=BUCKETS-1; i++)
+	{
 		hashes[i]=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
-	for(i=0; i<=BUCKETS-1; i++)
 		len[i]=0;
-
-	maxsize=INITLEN;
+		maxsize[i]=INITLEN;
+	}
 
 	while(fgets(input, BUFSIZ, stdin)!=NULL)
 	{
@@ -40,10 +36,10 @@ int main(int argc, char** argv)
 
 		if(hashes[bucket][pos]!=hashval)
 		{
-			if(len[bucket]>=maxsize-1)
+			if(len[bucket]>=maxsize[bucket]-1)
 			{
-				maxsize=len[bucket]*2;
-				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize);
+				maxsize[bucket]=len[bucket]*2;
+				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize[bucket]);
 			}
 			shiftback(hashes[bucket], pos, len[bucket]);
 			hashes[bucket][pos]=hashval;
