@@ -1,6 +1,6 @@
 BINS=llwmuu ahashuu ihashuu bhashuu
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -s
 
 all: ${BINS}
 
