@@ -3,26 +3,31 @@ gentest: gen zzzz >gentest
 dicttest: cp ~/proj/finished/1wf/dict dicttest
 mutest: muring with mui, wait until it dies, cp ~/prog/ring/mu mutest
 
-uu.awk, numtest: 0.117s, 0 errs
-uu.lua, numtest: 0.552s, 0 errs
-hashuu.lua, numtest: 0.916s, 0 errs
-llwmuu, numtest: 102.652s, 0 errs
+numtest:
+uu.awk: 0.117s, 0 errs
+uu.lua: 0.552s, 0 errs
+hashuu.lua: 0.916s, 0 errs
+llwmuu: 102.652s, 0 errs
 	with O3: 90.216s, 0 errs
-ahashuu, numtest: 26.188s, 2 errs
+ahashuu: 26.188s, 2 errs
 	with O3: 4.168s, 2 errs
-ihashuu, numtest: 16.414s, 2 errs
+ihashuu: 16.414s, 2 errs
 	with O3: 1.062s, 2 errs
-bhashuu, numtest: 0.067s, 2 errs
+bhashuu: 0.067s, 2 errs
 	with O3: 0.051s, 2 errs
 
-uu.awk, gentest: 0.617s, 0 errs
-uu.lua, gentest: 2.182s, 0 errs
-hashuu.lua, gentest: 3.543s, 271 errs
-bhashuu, gentest: 0.305s, 0 errs
+gentest:
+uu.awk: 0.617s, 0 errs
+uu.lua: 2.182s, 0 errs
+hashuu.lua: 3.543s, 271 errs
+ahashuu: 578.889s, 0 errs
+ihashuu: 352s, 0 errs
+bhashuu: 0.305s, 0 errs
 	with O3: 0.201s, 0 errs
 
-uu.awk, dicttest: 0.082s, 0 errs
-uu.lua, dicttest: 0.251s, 0 errs
-hashuu.lua, dicttest: 0.567s, 1 err
-bhashuu, dicttest: 0.041s, 0 errs
+dicttest:
+uu.awk: 0.082s, 0 errs
+uu.lua: 0.251s, 0 errs
+hashuu.lua: 0.567s, 1 err
+bhashuu: 0.041s, 0 errs
 	with O3: 0.038s, 0 errs
