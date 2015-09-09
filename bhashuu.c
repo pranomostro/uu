@@ -12,10 +12,11 @@ int binfind(uint32_t key, uint32_t* data, int len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
-int main(int argc, char** argv)
+int main(void)
 {
 	int i, bucket;
-	size_t pos, maxsize[BUCKETS], len[BUCKETS];
+	int pos;
+	size_t maxsize[BUCKETS], len[BUCKETS];
 	char input[BUFSIZ];
 	uint32_t hashval;
 	uint32_t* hashes[BUCKETS];
@@ -43,7 +44,7 @@ int main(int argc, char** argv)
 				maxsize[bucket]=len[bucket]*2;
 				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize[bucket]);
 			}
-			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, len[bucket]);
+			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, len[bucket]-pos);
 			hashes[bucket][pos]=hashval;
 			printf(input);
 			len[bucket]++;
@@ -72,10 +73,10 @@ int binfind(uint32_t key, uint32_t* data, int len)
 	while(low<=high)
 	{
 		mid=(low+high)/2;
-		if(data[mid]==key)
-			break;
-		else if(data[mid]<key)
+		if(data[mid]<key)
 			low=mid+1;
+		else if(data[mid]==key)
+			break;
 		else
 			high=mid-1;
 	}
