@@ -33,6 +33,9 @@ int main(int argc, char** argv)
 		bucket=hashval%BUCKETS;
 		pos=binfind(hashval, hashes[bucket], len[bucket]);
 
+		if(pos==-1)
+			break;
+
 		if(hashes[bucket][pos]!=hashval)
 		{
 			if(len[bucket]>=maxsize[bucket]-1)
@@ -61,16 +64,18 @@ int binfind(uint32_t key, uint32_t* data, int len)
 	low=0;
 	high=len-1;
 
-	if(data==NULL||len<=0)
+	if(len<=0)
 		return 0;
+	if(data==NULL)
+		return -1;
 
 	while(low<=high)
 	{
 		mid=(low+high)/2;
-		if(data[mid]<key)
-			low=mid+1;
-		else if(data[mid]==key)
+		if(data[mid]==key)
 			break;
+		else if(data[mid]<key)
+			low=mid+1;
 		else
 			high=mid-1;
 	}
