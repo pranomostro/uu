@@ -1,2 +1,3 @@
 -find a way to make the bhashuu hashes better.
 	Probably use a perfect hashing function?
+-make it faster, with memcopy()?

@@ -8,7 +8,6 @@
 #define INITLEN 256
 #define BUCKETS 10000
 
-void shiftback(uint32_t* data, size_t pos, size_t len);
 int binfind(uint32_t key, uint32_t* data, int len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
@@ -41,7 +40,7 @@ int main(int argc, char** argv)
 				maxsize[bucket]=len[bucket]*2;
 				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize[bucket]);
 			}
-			shiftback(hashes[bucket], pos, len[bucket]);
+			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, len[bucket]);
 			hashes[bucket][pos]=hashval;
 			printf(input);
 			len[bucket]++;
@@ -52,12 +51,6 @@ int main(int argc, char** argv)
 		free(hashes[i]);
 
 	return 0;
-}
-
-void shiftback(uint32_t* data, size_t pos, size_t len)
-{
-	while(len-->pos)
-		data[len+1]=data[len];
 }
 
 /*Taken from »The C programming language«, adapted for my needs*/
