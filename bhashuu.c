@@ -70,6 +70,8 @@ int binfind(uint32_t key, uint32_t* data, int len)
 	if(data==NULL)
 		return -1;
 
+	mid=(low+high)/2;
+
 	while(low<=high)
 	{
 		mid=(low+high)/2;

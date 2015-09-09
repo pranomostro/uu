@@ -13,8 +13,8 @@ ahashuu: 26.188s, 2 errs
 	with O3: 4.168s, 2 errs
 ihashuu: 16.414s, 2 errs
 	with O3: 1.062s, 2 errs
-bhashuu: 0.067s, 2 errs
-	with O3: 0.051s, 2 errs
+bhashuu: 0.067s, 1 errs
+	with O3: 0.051s, 1 err
 
 gentest:
 uu.awk: 0.617s, 0 errs
@@ -31,3 +31,8 @@ uu.lua: 0.251s, 0 errs
 hashuu.lua: 0.567s, 1 err
 bhashuu: 0.041s, 0 errs
 	with O3: 0.038s, 0 errs
+
+mutest:
+uu.awk: 41.805s, 0 errs
+bhashuu: 19.887s, 2451 errs
+	wth O3: 15.225s, 2450 errs
