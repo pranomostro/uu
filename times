@@ -3,23 +3,34 @@ gentest: gen zzzz >gentest
 dicttest: cp ~/proj/finished/1wf/dict dicttest
 mutest: muring with mui, wait until it dies, cp ~/prog/ring/mu mutest
 numstest: ring2 with 100000, first 1000000 lines, cp ~/prog/ring/nums numstest
+stringstest: strings /usr/bin/* >stringstest
 
 numtest:
 uu.awk: 0.117s, 0 errs
-bhashuu: 0.067s, 1 errs
-	with O3: 0.051s, 1 err
+bhashuu: 0.069s, 2 errs
+	with O3: 0.054s, 2 errs
 
 gentest:
 uu.awk: 0.617s, 0 errs
-bhashuu: 0.305s, 0 errs
-	with O3: 0.201s, 0 errs
+bhashuu: 0.287s, 0 errs
+	with O3: 0.212s, 0 errs
+
+numstest:
+uu.awk: 0.696s, 0 errs
+bhashuu: 0.293s, 0 errs
+	with O3: 0.170s, 0 errs
 
 dicttest:
 uu.awk: 0.082s, 0 errs
-bhashuu: 0.041s, 0 errs
-	with O3: 0.038s, 0 errs
+bhashuu: 0.046s, 0 errs
+	with O3: 0.037s, 0 errs
+
+stringstest:
+uu.awk: 4.172s, 0 errs
+bhashuu: 2.469s, 73 errs
+	with O3: 1.730s, 73 errs
 
 mutest:
 uu.awk: 41.805s, 0 errs
-bhashuu: 19.887s, 2451 errs
-	wth O3: 15.225s, 2450 errs
+bhashuu: 27.749s, 24764 errs
+	wth O3: 22.437s, 24764 errs

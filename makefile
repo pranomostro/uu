@@ -1,6 +1,6 @@
 BINS=bhashuu
 CC=gcc
-CFLAGS=-Wall -Wextra -g
+CFLAGS=-Wall -Wextra -O3 -s
 
 all: ${BINS}
 
