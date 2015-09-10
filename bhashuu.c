@@ -5,8 +5,8 @@
 #include <string.h>
 #include <stdint.h>
 
-#define INITLEN 256
-#define BUCKETS 10000
+#define INITLEN 2
+#define BUCKETS 2
 
 int binfind(uint32_t key, uint32_t* data, int len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
@@ -46,7 +46,7 @@ int main(void)
 			}
 			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, len[bucket]-pos);
 			hashes[bucket][pos]=hashval;
-			printf(input);
+			puts(input);
 			len[bucket]++;
 		}
 	}
@@ -64,13 +64,12 @@ int binfind(uint32_t key, uint32_t* data, int len)
 	int low, high, mid;
 	low=0;
 	high=len-1;
+	mid=(low+high)/2;
 
 	if(len<=0)
 		return 0;
 	if(data==NULL)
 		return -1;
-
-	mid=(low+high)/2;
 
 	while(low<=high)
 	{
@@ -94,7 +93,7 @@ uint32_t* resize(uint32_t* data, size_t old, size_t new)
 		na=(uint32_t*)malloc(new*sizeof(uint32_t));
 		if(na==NULL)
 		{
-			fprintf(stderr, "error: no memory left, exiting.\n");
+			fputs(stderr, "error: no memory left, exiting.");
 			return NULL;
 		}
 		for(c=0; c<=old; c++)
