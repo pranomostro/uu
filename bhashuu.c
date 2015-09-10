@@ -5,8 +5,8 @@
 #include <string.h>
 #include <stdint.h>
 
-#define INITLEN 2
-#define BUCKETS 2
+#define INITLEN 256
+#define BUCKETS 10000
 
 int binfind(uint32_t key, uint32_t* data, int len);
 uint32_t* resize(uint32_t* data, size_t old, size_t new);
@@ -44,10 +44,10 @@ int main(void)
 				maxsize[bucket]=len[bucket]*2;
 				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize[bucket]);
 			}
-			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, len[bucket]-pos);
+			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, (len[bucket]-pos)*sizeof(uint32_t));
 			hashes[bucket][pos]=hashval;
-			puts(input);
 			len[bucket]++;
+			fputs(input, stdout);
 		}
 	}
 
