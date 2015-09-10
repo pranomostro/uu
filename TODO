@@ -2,3 +2,4 @@
 	Probably use a perfect hashing function?
 -with really big inputs, bhashuu begins to ignore different numbers of lines.
 	Especially with different optimizations. Check this with valgrind.
+-add automated tests
