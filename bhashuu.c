@@ -93,7 +93,7 @@ uint32_t* resize(uint32_t* data, size_t old, size_t new)
 		na=(uint32_t*)malloc(new*sizeof(uint32_t));
 		if(na==NULL)
 		{
-			fputs(stderr, "error: no memory left, exiting.");
+			fputs("error: no memory left, exiting.", stderr);
 			return NULL;
 		}
 		for(c=0; c<=old; c++)
