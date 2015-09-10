@@ -2,33 +2,20 @@ numtest: seq 1 100000 >numtest
 gentest: gen zzzz >gentest
 dicttest: cp ~/proj/finished/1wf/dict dicttest
 mutest: muring with mui, wait until it dies, cp ~/prog/ring/mu mutest
+numstest: ring2 with 100000, first 1000000 lines, cp ~/prog/ring/nums numstest
 
 numtest:
 uu.awk: 0.117s, 0 errs
-uu.lua: 0.552s, 0 errs
-hashuu.lua: 0.916s, 0 errs
-llwmuu: 102.652s, 0 errs
-	with O3: 90.216s, 0 errs
-ahashuu: 26.188s, 2 errs
-	with O3: 4.168s, 2 errs
-ihashuu: 16.414s, 2 errs
-	with O3: 1.062s, 2 errs
 bhashuu: 0.067s, 1 errs
 	with O3: 0.051s, 1 err
 
 gentest:
 uu.awk: 0.617s, 0 errs
-uu.lua: 2.182s, 0 errs
-hashuu.lua: 3.543s, 271 errs
-ahashuu: 578.889s, 0 errs
-ihashuu: 352s, 0 errs
 bhashuu: 0.305s, 0 errs
 	with O3: 0.201s, 0 errs
 
 dicttest:
 uu.awk: 0.082s, 0 errs
-uu.lua: 0.251s, 0 errs
-hashuu.lua: 0.567s, 1 err
 bhashuu: 0.041s, 0 errs
 	with O3: 0.038s, 0 errs
 
