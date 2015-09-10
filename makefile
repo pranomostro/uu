@@ -2,10 +2,9 @@ BINS=bhashuu
 CC=gcc
 CFLAGS=-Wall -Wextra -O3 -s
 
-all: ${BINS}
+all: bhashuu
 
-%: %.c
-	${CC} ${CFLAGS} $< -o $@
-
+bhashuu: bhashuu.c deps/murmurhash/murmurhash.c deps/murmurhash/murmurhash.h
+	${CC} ${CFLAGS} bhashuu.c deps/murmurhash/murmurhash.c -o bhashuu
 clean:
 	rm -f ${BINS}
