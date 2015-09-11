@@ -1,5 +1,7 @@
 -find a way to make the bhashuu hashes better.
 	Probably use a perfect hashing function?
+	Or use a 64-bit hash.
 -add automated tests
 -optimize binfind, approximate the position, maybe?
 -make the input size variable.
+-check in the beginning if malloc fails
