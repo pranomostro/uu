@@ -36,9 +36,6 @@ int main(void)
 		bucket=hashval%BUCKETS;
 		pos=binfind(hashval, hashes[bucket], len[bucket]);
 
-		if(pos==-1)
-			break;
-
 		if(hashes[bucket][pos]!=hashval)
 		{
 			if(len[bucket]>=maxsize[bucket]-1)
@@ -70,8 +67,6 @@ int binfind(uint32_t key, uint32_t* data, int len)
 
 	if(len<=0)
 		return 0;
-	if(data==NULL)
-		return -1;
 
 	while(low<=high&&data[mid]!=key)
 	{
