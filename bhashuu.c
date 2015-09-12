@@ -26,6 +26,13 @@ int main(void)
 	for(i=0; i<=BUCKETS-1; i++)
 	{
 		hashes[i]=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
+		if(hashes[i]==NULL)
+		{
+			fputs("error, no memory left, exiting", stderr);
+			for(i--; i>=0; i--)
+				free(hashes[i]);
+			exit(1);
+		}
 		len[i]=0;
 		maxsize[i]=INITLEN;
 	}
