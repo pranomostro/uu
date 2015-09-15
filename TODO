@@ -4,4 +4,3 @@
 -add automated tests
 -optimize binfind, approximate the position, maybe?
 -make the input size variable.
--check in the beginning if malloc fails

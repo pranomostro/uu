@@ -1,20 +1,20 @@
 #Makefile for uu.
 
 PREFIX = /usr/local
-TARGET = uu
+TARGET = fuu
 
 CC = gcc
 CFLAGS = -Wall -std=c99 -pedantic
-LIBS =
+LDFLAGS =
 DEPSDIR = deps/murmurhash
-OFILES = uu.o ${DEPSDIR}/murmurhash.o
+OFILES = fuu.o ${DEPSDIR}/murmurhash.o
 
 all: ${TARGET}
 
 ${TARGET}: ${OFILES}
-	${CC} ${LIBS} ${OFILES} -o ${TARGET}
+	${CC} ${LDFLAGS} ${OFILES} -o ${TARGET}
 
-uu.o: uu.c
+fuu.o: fuu.c
 	${CC} ${CFLAGS} -c $<
 
 ${DEPSDIR}/murmurhash.o: ${DEPSDIR}/murmurhash.c
