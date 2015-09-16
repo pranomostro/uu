@@ -3,4 +3,5 @@
 	Or use a 64-bit hash.
 -add automated tests
 -optimize binfind, approximate the position, maybe?
--make the input size variable.
+-make the input size variable
+-write a nicer makefile

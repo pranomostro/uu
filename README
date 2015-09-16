@@ -1,0 +1,5 @@
+uu is a text filter utility similar to the well known and
+loved uniq. The only real difference between uu and uniq
+is that in uniq, the second and succeding copies of repeated
+lines are removed, while with uu, the lines are not required
+to be adjacent.
