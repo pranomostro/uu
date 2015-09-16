@@ -1,19 +1,19 @@
 #Makefile for uu.
 
 PREFIX = /usr/local
-TARGET = fuu
+TARGET = uu
 
 CC = gcc
 CFLAGS = -Wall -std=c99 -pedantic
 LDFLAGS =
-OFILES = fuu.o murmurhash.o
+OFILES = uu.o murmurhash.o
 
 all: ${TARGET}
 
 ${TARGET}: ${OFILES}
 	${CC} ${LDFLAGS} ${OFILES} -o ${TARGET}
 
-fuu.o: fuu.c
+uu.o: uu.c
 	${CC} ${CFLAGS} -c $<
 
 murmurhash.o: murmurhash.c
