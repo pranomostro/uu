@@ -6,8 +6,7 @@ TARGET = fuu
 CC = gcc
 CFLAGS = -Wall -std=c99 -pedantic
 LDFLAGS =
-DEPSDIR = deps/murmurhash
-OFILES = fuu.o ${DEPSDIR}/murmurhash.o
+OFILES = fuu.o murmurhash.o
 
 all: ${TARGET}
 
@@ -17,7 +16,7 @@ ${TARGET}: ${OFILES}
 fuu.o: fuu.c
 	${CC} ${CFLAGS} -c $<
 
-${DEPSDIR}/murmurhash.o: ${DEPSDIR}/murmurhash.c
+murmurhash.o: murmurhash.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
