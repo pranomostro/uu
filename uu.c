@@ -11,7 +11,7 @@
 #define BUCKETS 10000
 
 int binfind(uint32_t key, uint32_t* data, int len);
-uint32_t* resize(uint32_t* data, size_t old, size_t new);
+void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
 int main(void)
@@ -48,7 +48,7 @@ int main(void)
 			if(len[bucket]>=maxsize[bucket]-1)
 			{
 				maxsize[bucket]=len[bucket]*2;
-				hashes[bucket]=resize(hashes[bucket], len[bucket], maxsize[bucket]);
+				hashes[bucket]=resize(hashes[bucket], len[bucket]*sizeof(uint32_t), maxsize[bucket]*sizeof(uint32_t));
 			}
 			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, (len[bucket]-pos)*sizeof(uint32_t));
 			hashes[bucket][pos]=hashval;
@@ -86,18 +86,18 @@ int binfind(uint32_t key, uint32_t* data, int len)
 	return data[mid]<key?mid+1:mid;
 }
 
-uint32_t* resize(uint32_t* data, size_t old, size_t new)
+void* resize(void* data, size_t old, size_t new)
 {
-	uint32_t* na=(uint32_t*)realloc(data, new*sizeof(uint32_t));
+	void* na=realloc(data, new);
 	if(na==NULL)
 	{
-		na=(uint32_t*)malloc(new*sizeof(uint32_t));
+		na=malloc(new);
 		if(na==NULL)
 		{
 			fputs("error: no memory left, exiting.", stderr);
 			return NULL;
 		}
-		memcpy(na, data, old*sizeof(uint32_t));
+		memcpy(na, data, old);
 		free(data);
 	}
 	return na;

@@ -2,6 +2,6 @@
 	Probably use a perfect hashing function?
 	Or use a 64-bit hash.
 -add automated tests
--optimize binfind, approximate the position, maybe?
+-make the C version faster, mostly by optimizing binfind.
 -make the input size variable
 -write a nicer makefile
