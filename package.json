@@ -1,0 +1,9 @@
+{
+	"name": "uu",
+	"version": "0.0",
+	"repo": "scharlatan/uu",
+	"description": "unsorted uniq",
+	"keywords": ["filter", "uniq", "line-based", "slow"],
+	"license": "MIT",
+	"install": "make install"
+}
