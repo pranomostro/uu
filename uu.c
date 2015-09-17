@@ -7,8 +7,8 @@
 
 #include "murmurhash.h"
 
-#define INITLEN 256
-#define BUCKETS 10000
+#define INITLEN 4
+#define BUCKETS 2
 
 int binfind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
@@ -67,23 +67,17 @@ int main(void)
 
 int binfind(uint32_t key, uint32_t* data, int len)
 {
+	if(len<=0)
+		return 0;
+	else if(data[0]>=key)
+		return 0;
+	else if(data[len-1]<key)
+		return len;
+
 	int low, high, mid;
 	low=0;
 	high=len-1;
-	mid=(low+high)/2;
-
-	if(len<=0)
-		return 0;
-
-	while(low<=high&&data[mid]!=key)
-	{
-		mid=(low+high)/2;
-		if(data[mid]<key)
-			low=mid+1;
-		else
-			high=mid-1;
-	}
-	return data[mid]<key?mid+1:mid;
+	mid=((float)(data[high]-data[low])/(float)(key-data[low]))*len;
 }
 
 void* resize(void* data, size_t old, size_t new)
