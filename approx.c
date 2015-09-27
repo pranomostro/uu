@@ -35,11 +35,13 @@ int afind(int key, int* data, int len)
 	else if (data[len-1]<key)
 		return len;
 
-	int low, mid, high;
+	int mid, high;
 
-	high=len-1;
-	low=0;
-	mid=(int)((float)(data[high]-data[low])/(float)(key-data[low]))*len;
+	high=(float)data[high]-data[low]
+	mid=(int)((((float)key-data[low])/high)*(float)len);
+
+	if(data[mid]>=key&&data[mid-1]<key)
+		return mid;
 
 	return mid;
 }
