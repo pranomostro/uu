@@ -10,15 +10,20 @@ int main(void)
 	int arr[16];
 
 	for(c=0; c<16; c++)
+		arr[c]=0;
+
+	c=0;
+
+	while(scanf("%d", &in)!=EOF)
 	{
-		scanf("%i\n", &in);
 		pos=afind(in, arr, c);
-		memmove(arr+c+1, arr+c, c*sizeof(int));
+		memmove(arr+pos+1, arr+pos, c*sizeof(int));
 		arr[pos]=in;
+		c++;
 	}
 
 	for(c=0; c<16; c++)
-		printf("%i\n", c);
+		printf("%i\n", arr[c]);
 
 	return 0;
 }
@@ -31,5 +36,10 @@ int afind(int key, int* data, int len)
 		return len;
 
 	int low, mid, high;
-	return 0;
+
+	high=len-1;
+	low=0;
+	mid=(int)((float)(data[high]-data[low])/(float)(key-data[low]))*len;
+
+	return mid;
 }
