@@ -17,7 +17,7 @@ int main(void)
 	while(scanf("%d", &in)!=EOF)
 	{
 		pos=afind(in, arr, c);
-		memmove(arr+pos+1, arr+pos, c*sizeof(int));
+		memmove(arr+pos+1, arr+pos, ((16-pos)*sizeof(int)));
 		arr[pos]=in;
 		c++;
 	}
