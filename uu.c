@@ -63,8 +63,6 @@ int main(void)
 	return 0;
 }
 
-/*Taken from »The C programming language«, adapted for my needs*/
-
 int binfind(uint32_t key, uint32_t* data, int len)
 {
 	if(len<=0)
