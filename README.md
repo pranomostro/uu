@@ -1,3 +1,16 @@
+What for?
+=========
+
+uu can be used when you would like to apply uniq to an
+input but need to keep the order of the input lines or
+you don't want your entire input to be consumed before
+processing it (like with `sort | uniq`).
+For example, if you want have got a dictionary with the
+words sorted after frequency and you want to convert the
+dictionary to lowercase while keeping the order of the
+dictionary, you would write
+	tr 'A-Z' 'a-z' dict | uu >lcdict
+
 A small utility
 ===============
 
@@ -19,3 +32,16 @@ uu is currently implemented in two languages:
 	the C version is also already slightly faster
 	than uu.awk when it is compiled with optimization,
 	and it is improved further.
+
+Installation
+============
+
+Just type
+	make install
+and enjoy the experience.
+
+Thanks and license
+==================
+
+The whole thing is licensed under the MIT-license.
+Thanks to [jwerle](https://www.github.com/jwerle) for the murmurhash library.
