@@ -7,9 +7,9 @@ int afind(int key, int* data, int len);
 int main(void)
 {
 	int c, in, pos;
-	int arr[16];
+	int arr[32];
 
-	for(c=0; c<16; c++)
+	for(c=0; c<32; c++)
 		arr[c]=0;
 
 	c=0;
@@ -17,12 +17,12 @@ int main(void)
 	while(scanf("%d", &in)!=EOF)
 	{
 		pos=afind(in, arr, c);
-		memmove(arr+pos+1, arr+pos, ((16-pos)*sizeof(int)));
+		memmove(arr+pos+1, arr+pos, ((32-pos)*sizeof(int)));
 		arr[pos]=in;
 		c++;
 	}
 
-	for(c=0; c<16; c++)
+	for(c=0; c<32; c++)
 		printf("%i\n", arr[c]);
 
 	return 0;

@@ -7,10 +7,10 @@
 
 #include "murmurhash.h"
 
-#define INITLEN 2
-#define BUCKETS 2
+#define INITLEN 256
+#define BUCKETS 10000
 
-int binfind(uint32_t key, uint32_t* data, int len);
+int afind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
@@ -41,11 +41,11 @@ int main(void)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=binfind(hashval, hashes[bucket], len[bucket]);
+		pos=afind(hashval, hashes[bucket], len[bucket]);
 
 		if(hashes[bucket][pos]!=hashval)
 		{
-			if(len[bucket]>=maxsize[bucket]-1)
+			if(len[bucket]>=maxsize[bucket])
 			{
 				maxsize[bucket]=len[bucket]*2;
 				hashes[bucket]=resize(hashes[bucket], len[bucket]*sizeof(uint32_t), maxsize[bucket]*sizeof(uint32_t));
@@ -63,17 +63,20 @@ int main(void)
 	return 0;
 }
 
-int binfind(uint32_t key, uint32_t* data, int len)
+int afind(uint32_t key, uint32_t* data, int len)
 {
 	if(len<=0||data[0]>=key)
 		return 0;
-	else if (data[len-1]<=key)
+	else if(data[len-1]<key)
+		return len;
+	else if(data[len-1]==key)
 		return len-1;
 
-	int mid, high, dir;
+	float high;
+	int mid, dir;
 
-	high=(float)data[len-1]-data[0];
-	mid=(int)((((float)key-data[0])/high)*(float)len-1);
+	high=(float)(data[len-1]-data[0]);
+	mid=(int)((((float)key-data[0])/high)*(float)len);
 
 	if(data[mid]>=key&&data[mid-1]<key)
 		return mid;
