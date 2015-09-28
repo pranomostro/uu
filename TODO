@@ -3,4 +3,3 @@
 	Or use a 64-bit hash.
 -add automated tests
 -make the input size variable
--write a nicer makefile
