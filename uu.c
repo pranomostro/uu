@@ -10,7 +10,7 @@
 #define INITLEN 256
 #define BUCKETS 10000
 
-int binfind(uint32_t key, uint32_t* data, int len);
+int afind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
@@ -41,11 +41,11 @@ int main(void)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=binfind(hashval, hashes[bucket], len[bucket]);
+		pos=afind(hashval, hashes[bucket], len[bucket]);
 
 		if(hashes[bucket][pos]!=hashval)
 		{
-			if(len[bucket]>=maxsize[bucket]-1)
+			if(len[bucket]>=maxsize[bucket])
 			{
 				maxsize[bucket]=len[bucket]*2;
 				hashes[bucket]=resize(hashes[bucket], len[bucket]*sizeof(uint32_t), maxsize[bucket]*sizeof(uint32_t));
@@ -63,27 +63,32 @@ int main(void)
 	return 0;
 }
 
-/*Taken from »The C programming language«, adapted for my needs*/
-
-int binfind(uint32_t key, uint32_t* data, int len)
+int afind(uint32_t key, uint32_t* data, int len)
 {
-	int low, high, mid;
-	low=0;
-	high=len-1;
-	mid=(low+high)/2;
-
-	if(len<=0)
+	if(len<=0||data[0]>=key)
 		return 0;
+	else if(data[len-1]<key)
+		return len;
+	else if(data[len-1]==key)
+		return len-1;
 
-	while(low<=high&&data[mid]!=key)
-	{
-		mid=(low+high)/2;
-		if(data[mid]<key)
-			low=mid+1;
-		else
-			high=mid-1;
-	}
-	return data[mid]<key?mid+1:mid;
+	float high;
+	int mid, dir;
+
+	high=(float)(data[len-1]-data[0]);
+	mid=(int)((((float)key-data[0])/high)*(float)len);
+
+	if(data[mid]>=key&&data[mid-1]<key)
+		return mid;
+	else if(data[mid]<key)
+		dir=1;
+	else
+		dir=-1;
+
+	while(!(data[mid]>=key&&data[mid-1]<key))
+		mid+=dir;
+
+	return mid;
 }
 
 void* resize(void* data, size_t old, size_t new)
