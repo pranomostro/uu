@@ -4,7 +4,7 @@ PREFIX = /usr/local
 TARGET = uu
 
 CC = gcc
-CFLAGS = -Wall -std=c99 -pedantic
+CFLAGS = -Wall -std=c99 -pedantic -g
 LDFLAGS =
 OFILES = uu.o murmurhash.o
 

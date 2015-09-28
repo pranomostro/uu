@@ -32,7 +32,7 @@ int afind(int key, int* data, int len)
 {
 	if(len<=0||data[0]>=key)
 		return 0;
-	else if (data[len-1]<key)
+	else if (data[len-1]<=key)
 		return len;
 
 	int mid, high, dir;
