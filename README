@@ -14,4 +14,4 @@ uu is implemented in two languages:
 	the C program only holds the 32-bit hashes of the input lines
 	in memory. the C version is also already slightly faster
 	than uu.awk when it is compiled with optimization,
-	and is improved further.
+	and it is improved further.
