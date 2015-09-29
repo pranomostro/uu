@@ -69,18 +69,14 @@ int afind(uint32_t key, uint32_t* data, int len)
 		return 0;
 	else if(data[len-1]<key)
 		return len;
-	else if(data[len-1]==key)
-		return len-1;
 
 	float high;
 	int mid, dir;
 
 	high=(float)(data[len-1]-data[0]);
-	mid=(int)((((float)key-data[0])/high)*(float)len);
+	mid=(int)((((float)key-data[0])/high)*(float)(len-1));
 
-	if(data[mid]>=key&&data[mid-1]<key)
-		return mid;
-	else if(data[mid]<key)
+	if(data[mid]<key)
 		dir=1;
 	else
 		dir=-1;
