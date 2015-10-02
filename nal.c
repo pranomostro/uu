@@ -1,21 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-int nalread(char* in, size_t len);
+int nalread(char* in, size_t* len);
 void* resize(void* data, size_t old, size_t new);
 
 int main(void)
 {
 	char* in;
-	size_t inlen=16;
-	in=(char*)calloc(inlen, sizeof(char)*inlen);
+	size_t* inlen;
+	*inlen=16;
+	in=(char*)calloc(*inlen, sizeof(char));
+
+	while(nalread(in, &inlen)>0)
+		puts(in);
 
 	return 0;
 }
 
-int nalread(char* in, size_t len)
+int nalread(char* in, size_t* len)
 {
-
 }
 
 void* resize(void* data, size_t old, size_t new)
