@@ -8,9 +8,8 @@ void* resize(void* data, size_t old, size_t new);
 int main(void)
 {
 	char* in;
-	size_t* inlen;
-	*inlen=16;
-	in=(char*)calloc(*inlen, sizeof(char));
+	size_t inlen=4;
+	in=(char*)calloc(inlen, sizeof(char));
 
 	while(nalread(in, &inlen)>0)
 		puts(in);
@@ -20,6 +19,8 @@ int main(void)
 
 int nalread(char* in, size_t* len)
 {
+	in=fgets(in, *len, stdin);
+	return strlen(in);
 }
 
 void* resize(void* data, size_t old, size_t new)
