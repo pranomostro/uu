@@ -19,7 +19,18 @@ int main(void)
 
 int nalread(char* in, size_t* len)
 {
-	in=fgets(in, *len, stdin);
+	char* next=in;
+	int oldlen=*len;
+
+	do
+	{
+		next=fgets(next, oldlen, stdin);
+		*len*=2;
+		in=resize(in, oldlen*sizeof(char), *len*sizeof(char));
+		next=in+oldlen;
+	}
+	while(in[strlen(in)-1!='\n']&&next!=NULL);
+
 	return strlen(in);
 }
 
