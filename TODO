@@ -3,3 +3,4 @@
 	Or use a 64-bit hash.
 -add automated tests
 -play around with paralellism and look if it gets any faster.
+-write a version in go.
