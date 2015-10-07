@@ -10,6 +10,7 @@
 #define INITLEN 256
 #define BUCKETS 10000
 
+char* nalread(char* in, size_t* len);
 int afind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
@@ -18,8 +19,8 @@ int main(void)
 {
 	int i, bucket;
 	int pos;
-	size_t maxsize[BUCKETS], len[BUCKETS];
-	char input[BUFSIZ];
+	size_t maxsize[BUCKETS], len[BUCKETS], inputsize=BUFSIZ;
+	char* input=(char*)calloc(inputsize, sizeof(char));
 	uint32_t hashval;
 	uint32_t* hashes[BUCKETS];
 
@@ -37,7 +38,7 @@ int main(void)
 		maxsize[i]=INITLEN;
 	}
 
-	while(fgets(input, BUFSIZ, stdin)!=NULL)
+	while((input=nalread(input, &inputsize))!=NULL)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
@@ -61,6 +62,30 @@ int main(void)
 		free(hashes[i]);
 
 	return 0;
+}
+
+char* nalread(char* in, size_t* len)
+{
+	char c;
+	size_t count=0;
+
+	c=getc(stdin);
+
+	while(c!='\n'&&!feof(stdin))
+	{
+		if(count>=*(len)-3)
+		{
+			in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*(*len*2));
+			(*len)*=2;
+		}
+		in[count++]=c;
+		c=getc(stdin);
+	}
+
+	in[count++]='\n';
+	in[count]='\0';
+
+	return feof(stdin)?NULL:in;
 }
 
 int afind(uint32_t key, uint32_t* data, int len)
