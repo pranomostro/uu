@@ -23,9 +23,7 @@ char* nalread(char* in, size_t* len)
 	char c;
 	size_t count=0;
 
-	c=getc(stdin);
-
-	while(c!='\n'&&!feof(stdin))
+	while((c=getc(stdin))!='\n'&&!feof(stdin))
 	{
 		if(count>=*(len)-3)
 		{
