@@ -3,22 +3,25 @@
 #include <string.h>
 #include <unistd.h>
 
-int nalread(char* in, size_t* len);
-void* resize(void* data, size_t old, size_t new);
+int nalread(char* in, int* len);
+void* resize(void* data, int old, int new);
 
 int main(void)
 {
 	char* in;
-	size_t inlen=4;
+	int inlen=4;
+	int read;
 	in=(char*)calloc(inlen, sizeof(char));
 
-	while(nalread(in, &inlen)>=0)
-		printf(in);
+	while((read=nalread(in, &inlen))>=0)
+		write(1, in, read-1);
+
+	free(in);
 
 	return 0;
 }
 
-int nalread(char* in, size_t* len)
+int nalread(char* in, int* len)
 {
 	char c;
 	int count=0;
@@ -29,8 +32,8 @@ int nalread(char* in, size_t* len)
 	{
 		if(count>=*(len)-3)
 		{
-			in=resize(in, sizeof(char)*(*len), sizeof(char)*(*len*2));
-			*len*=2;
+			in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*(*len*2));
+			(*len)*=2;
 		}
 		in[count++]=c;
 		c=getc(stdin);
@@ -39,10 +42,10 @@ int nalread(char* in, size_t* len)
 	in[count++]='\n';
 	in[count]='\0';
 
-	return feof(stdin)?-1:count-1;
+	return feof(stdin)?-1:count;
 }
 
-void* resize(void* data, size_t old, size_t new)
+void* resize(void* data, int old, int new)
 {
 	void* na=realloc(data, new);
 	if(na==NULL)
