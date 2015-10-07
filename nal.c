@@ -1,30 +1,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
-int nalread(char* in, int* len);
-void* resize(void* data, int old, int new);
+char* nalread(char* in, size_t* len);
+void* resize(void* data, size_t old, size_t new);
 
 int main(void)
 {
 	char* in;
-	int inlen=4;
-	int read;
+	size_t inlen=4;
 	in=(char*)calloc(inlen, sizeof(char));
 
-	while((read=nalread(in, &inlen))>=0)
-		write(1, in, read-1);
-
+	while((in=nalread(in, &inlen))!=NULL)
+			printf(in);
 	free(in);
 
 	return 0;
 }
 
-int nalread(char* in, int* len)
+char* nalread(char* in, size_t* len)
 {
 	char c;
-	int count=0;
+	size_t count=0;
 
 	c=getc(stdin);
 
@@ -42,10 +39,10 @@ int nalread(char* in, int* len)
 	in[count++]='\n';
 	in[count]='\0';
 
-	return feof(stdin)?-1:count;
+	return feof(stdin)?NULL:in;
 }
 
-void* resize(void* data, int old, int new)
+void* resize(void* data, size_t old, size_t new)
 {
 	void* na=realloc(data, new);
 	if(na==NULL)
