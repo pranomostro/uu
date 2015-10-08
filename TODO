@@ -1,3 +1,4 @@
 -play around with paralellism and look if it gets any faster.
 -write a version in go.
 -optimize nalread
+-ternary afind? other ideas...

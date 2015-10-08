@@ -11,6 +11,8 @@ dictionary to lowercase while keeping the order of the
 dictionary, you would write
 	tr 'A-Z' 'a-z' dict | uu >lcdict
 
+That's basically everything!
+
 A small utility
 ===============
 
@@ -27,7 +29,7 @@ uu is currently implemented in two languages:
 	two implementations, except when…
 -the C version is rather an experiment if it is possible to write a
 	faster and more memory efficient version. while the awk program does
-	not make any errors, it saves all the input lines, while
+	not make any errors, it saves all the input lines,
 	the C program only holds the 32-bit hashes for every input line.
 	the C version is also already slightly faster
 	than uu.awk when it is compiled with optimization,
@@ -44,4 +46,5 @@ Thanks and license
 ==================
 
 The whole thing is licensed under the MIT-license.
-Thanks to [jwerle](https://www.github.com/jwerle) for the murmurhash library.
+Thanks to [jwerle](https://www.github.com/jwerle) for his
+implementation of murmurhash.
