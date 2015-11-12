@@ -27,7 +27,7 @@ uu is currently implemented in two languages:
 	to understand, memory safe, does not make any errors
 	and is in nearly every point the better one of these
 	two implementations, except when…
--the C version is rather an experiment if it is possible to write a
+-the C version fnuu (false negatives uu) is rather an experiment if it is possible to write a
 	faster and more memory efficient version. while the awk program does
 	not make any errors, it saves all the input lines,
 	the C program only holds the 32-bit hashes for every input line.
