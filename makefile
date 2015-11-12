@@ -20,7 +20,7 @@ murmurhash.o: murmurhash.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -rf ${TARGET} ${OFILES}
+	rm -rf fn${TARGET} ${OFILES}
 
 install: all
 	mkdir -p ${PREFIX}/bin ${PREFIX}/share/man/man1
