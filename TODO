@@ -1,4 +1,4 @@
 -play around with paralellism and look if it gets any faster.
 -write a version in go.
 -optimize nalread
--ternary afind? other ideas...
+-afind should be a mixture of the current afind and binary search. bsearch() with approximating the next position.
