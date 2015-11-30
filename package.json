@@ -4,7 +4,7 @@
 	"repo": "scharlatan/uu",
 	"description": "unsorted uniq",
 	"license": "MIT",
-	"install": "make",
+	"install": "make install",
 	"makefile": "makefile",
 	"keywords": ["filter", "uniq", "line-oriented", "slow"],
 	"src": ["fnuu.c" "uu"],
