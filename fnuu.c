@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "murmurhash.h"
+#include "deps/murmurhash/murmurhash.h"
 
 #define INITLEN 256
 #define BUCKETS 10000
