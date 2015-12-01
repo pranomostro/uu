@@ -1,4 +1,4 @@
-/*unsorted uniq with hashes in an array of pointers, hashes are inserted*/
+/*unsorted uniq with entries in an array of pointers, entries are inserted*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,9 +17,15 @@ uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
 typedef struct
 {
-	uint32_t* hashes;
+	uint32_t* entries;
 	size_t len, maxlen;
 } Bucket;
+
+typedef struct
+{
+	uint32_t hash;
+	char fchar;
+} Entry;
 
 int main(void)
 {
@@ -31,12 +37,12 @@ int main(void)
 
 	for(i=0; i<=BUCKETS-1; i++)
 	{
-		values[i].hashes=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
-		if(values[i].hashes==NULL)
+		values[i].entries=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
+		if(values[i].entries==NULL)
 		{
 			fputs("error, no memory left, exiting", stderr);
 			for(i--; i>=0; i--)
-				free(values[i].hashes);
+				free(values[i].entries);
 			exit(1);
 		}
 		values[i].len=0;
@@ -47,24 +53,24 @@ int main(void)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=afind(hashval, values[bucket].hashes, values[bucket].len);
+		pos=afind(hashval, values[bucket].entries, values[bucket].len);
 
-		if(values[bucket].hashes[pos]!=hashval)
+		if(values[bucket].entries[pos]!=hashval)
 		{
 			if(values[bucket].len>=values[bucket].maxlen)
 			{
 				values[bucket].maxlen=values[bucket].len*2;
-				values[bucket].hashes=resize(values[bucket].hashes, values[bucket].len*sizeof(uint32_t), values[bucket].maxlen*sizeof(uint32_t));
+				values[bucket].entries=resize(values[bucket].entries, values[bucket].len*sizeof(uint32_t), values[bucket].maxlen*sizeof(uint32_t));
 			}
-			memmove(values[bucket].hashes+pos+1, values[bucket].hashes+pos, (values[bucket].len-pos)*sizeof(uint32_t));
-			values[bucket].hashes[pos]=hashval;
+			memmove(values[bucket].entries+pos+1, values[bucket].entries+pos, (values[bucket].len-pos)*sizeof(uint32_t));
+			values[bucket].entries[pos]=hashval;
 			values[bucket].len++;
 			fputs(input, stdout);
 		}
 	}
 
 	for(i=0; i<=BUCKETS-1; i++)
-		free(values[i].hashes);
+		free(values[i].entries);
 
 	return 0;
 }
