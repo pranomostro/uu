@@ -15,51 +15,56 @@ int afind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
+typedef struct
+{
+	uint32_t* hashes;
+	size_t len, maxlen;
+} Bucket;
+
 int main(void)
 {
-	int i, bucket;
-	int pos;
-	size_t maxsize[BUCKETS], len[BUCKETS], inputsize=BUFSIZ;
-	char* input=(char*)calloc(inputsize, sizeof(char));
+	int i, bucket, pos;
+	size_t inputsize=BUFSIZ;
 	uint32_t hashval;
-	uint32_t* hashes[BUCKETS];
+	char* input=(char*)calloc(inputsize, sizeof(char));
+	Bucket values[BUCKETS];
 
 	for(i=0; i<=BUCKETS-1; i++)
 	{
-		hashes[i]=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
-		if(hashes[i]==NULL)
+		values[i].hashes=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
+		if(values[i].hashes==NULL)
 		{
 			fputs("error, no memory left, exiting", stderr);
 			for(i--; i>=0; i--)
-				free(hashes[i]);
+				free(values[i].hashes);
 			exit(1);
 		}
-		len[i]=0;
-		maxsize[i]=INITLEN;
+		values[i].len=0;
+		values[i].maxlen=INITLEN;
 	}
 
 	while((input=nalread(input, &inputsize))!=NULL)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=afind(hashval, hashes[bucket], len[bucket]);
+		pos=afind(hashval, values[bucket].hashes, values[bucket].len);
 
-		if(hashes[bucket][pos]!=hashval)
+		if(values[bucket].hashes[pos]!=hashval)
 		{
-			if(len[bucket]>=maxsize[bucket])
+			if(values[bucket].len>=values[bucket].maxlen)
 			{
-				maxsize[bucket]=len[bucket]*2;
-				hashes[bucket]=resize(hashes[bucket], len[bucket]*sizeof(uint32_t), maxsize[bucket]*sizeof(uint32_t));
+				values[bucket].maxlen=values[bucket].len*2;
+				values[bucket].hashes=resize(values[bucket].hashes, values[bucket].len*sizeof(uint32_t), values[bucket].maxlen*sizeof(uint32_t));
 			}
-			memmove(hashes[bucket]+pos+1, hashes[bucket]+pos, (len[bucket]-pos)*sizeof(uint32_t));
-			hashes[bucket][pos]=hashval;
-			len[bucket]++;
+			memmove(values[bucket].hashes+pos+1, values[bucket].hashes+pos, (values[bucket].len-pos)*sizeof(uint32_t));
+			values[bucket].hashes[pos]=hashval;
+			values[bucket].len++;
 			fputs(input, stdout);
 		}
 	}
 
 	for(i=0; i<=BUCKETS-1; i++)
-		free(hashes[i]);
+		free(values[i].hashes);
 
 	return 0;
 }
