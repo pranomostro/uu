@@ -9,12 +9,13 @@ For example, if you want have got a dictionary with the
 words sorted after frequency and you want to convert the
 dictionary to lowercase while keeping the order of the
 dictionary, you would write
+
 	tr 'A-Z' 'a-z' dict | uu >lcdict
 
 That's basically everything!
 
 A small utility
-===============
+---------------
 
 uu is a text filter utility similar to the well known and
 loved uniq. The only real difference between uu and uniq
@@ -23,10 +24,12 @@ lines are removed, while with uu, the lines are not required
 to be adjacent.
 
 uu is currently implemented in two languages:
+
 -the awk version is the recommended one. it is extremely simple
 	to understand, memory safe, does not make any errors
 	and is in nearly every point the better one of these
-	two implementations, except when…
+	two implementations, except the case of memory usage.
+
 -the C version fnuu (false negatives uu) is rather an experiment if it is possible to write a
 	faster and more memory efficient version. while the awk program does
 	not make any errors, it saves all the input lines,
@@ -36,14 +39,16 @@ uu is currently implemented in two languages:
 	and it is improved further.
 
 Installation
-============
+------------
 
 Just type
+
 	make install
+
 and enjoy the experience.
 
 Thanks and license
-==================
+------------------
 
 The whole thing is licensed under the MIT-license.
 Thanks to [jwerle](https://www.github.com/jwerle) for his
