@@ -5,10 +5,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "config.h"
 #include "deps/murmurhash/murmurhash.h"
-
-#define INITLEN 256
-#define BUCKETS 10000
 
 char* nalread(char* in, size_t* len);
 int afind(uint32_t key, uint32_t* data, int len);
@@ -59,10 +57,16 @@ int main(void)
 		{
 			if(values[bucket].len>=values[bucket].maxlen)
 			{
-				values[bucket].maxlen=values[bucket].len*2;
-				values[bucket].entries=resize(values[bucket].entries, values[bucket].len*sizeof(uint32_t), values[bucket].maxlen*sizeof(uint32_t));
+				values[bucket].maxlen=values[bucket].len*RESIZEFACTOR;
+				values[bucket].entries=resize(values[bucket].entries,
+					values[bucket].len*sizeof(uint32_t),
+					values[bucket].maxlen*sizeof(uint32_t));
 			}
-			memmove(values[bucket].entries+pos+1, values[bucket].entries+pos, (values[bucket].len-pos)*sizeof(uint32_t));
+
+			memmove(values[bucket].entries+pos+1,
+				values[bucket].entries+pos,
+				(values[bucket].len-pos)*sizeof(uint32_t));
+
 			values[bucket].entries[pos]=hashval;
 			values[bucket].len++;
 			fputs(input, stdout);
@@ -86,7 +90,7 @@ char* nalread(char* in, size_t* len)
 	{
 		if(count>=*(len)-3)
 		{
-			in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*(*len*2));
+			in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*(*len*RESIZEFACTOR));
 			if(in==NULL)
 				return in;
 			(*len)*=2;
