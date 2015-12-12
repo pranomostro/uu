@@ -11,9 +11,9 @@
 	performance.
 */
 
-#define INITLEN 256
-#define BUCKETS 10000
+const int INITLEN=256;
+const int BUCKETS=10000;
 
 /* The factor for resizing arrays and strings during input */
 
-#define RESIZEFACTOR 2
+const int RESIZEFACTOR=2;
