@@ -4,7 +4,7 @@ PREFIX=/usr/local
 
 CC=gcc
 
-CFLAGS=-Wall -Wextra -std=c99 -pedantic -O2
+CFLAGS=-Wall -Wextra -pedantic -O2
 LDFLAGS=-s
 
 AWKTARGET=uu
