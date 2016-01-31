@@ -1,0 +1,10 @@
+#various files
+*test
+
+#binaries
+fnuu
+*.o
+
+#additional profiling information
+cov
+prof
