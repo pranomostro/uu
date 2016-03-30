@@ -19,12 +19,6 @@ typedef struct
 	size_t len, maxlen;
 } Bucket;
 
-typedef struct
-{
-	uint32_t hash;
-	char fchar;
-} Entry;
-
 int main(void)
 {
 	int i, bucket, pos;
