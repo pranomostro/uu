@@ -8,7 +8,7 @@
 #include "config.h"
 #include "deps/murmurhash/murmurhash.h"
 
-char* nalread(char* in, size_t* len);
+char* nalread(char* in, size_t* len, FILE* input);
 int afind(uint32_t key, uint32_t* data, int len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
@@ -47,7 +47,7 @@ int main(void)
 		values[i].maxlen=INITLEN;
 	}
 
-	while((input=nalread(input, &inputsize))!=NULL)
+	while((input=nalread(input, &inputsize, stdin))!=NULL)
 	{
 		hashval=murmurhash(input, strlen(input), 0xA17A1111);
 		bucket=hashval%BUCKETS;
@@ -79,30 +79,25 @@ int main(void)
 	return 0;
 }
 
-char* nalread(char* in, size_t* len)
+char* nalread(char* in, size_t* len, FILE* input)
 {
-	char c;
-	size_t count=0;
+	size_t readlen=(*len-1)/2, save;
+	char* readpos=in;
 
-	c=getc(stdin);
-
-	while(c!='\n'&&!feof(stdin))
+	while(1)
 	{
-		if(count>=*(len)-3)
-		{
-			in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*(*len*RESIZEFACTOR));
-			if(in==NULL)
-				return in;
-			(*len)*=2;
-		}
-		in[count++]=c;
-		c=getc(stdin);
+		if(fgets(readpos, readlen, input)==NULL) /*4094 chars are read*/
+			break;
+		if(readpos[strnlen(readpos, *len)-1]=='\n')
+			break;
+		save=(*len);
+		(*len)*=2;
+		readlen*=2;
+		in=(char*)resize(in, sizeof(char)*save, sizeof(char)*(*len));
+		readpos=in+strnlen(in, *len);
 	}
 
-	in[count++]='\n';
-	in[count]='\0';
-
-	return feof(stdin)?NULL:in;
+	return feof(input)?NULL:in;
 }
 
 int afind(uint32_t key, uint32_t* data, int len)
