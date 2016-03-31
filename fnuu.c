@@ -9,7 +9,7 @@
 #include "deps/murmurhash/murmurhash.h"
 
 char* nalread(char* in, size_t* len, FILE* input);
-int afind(uint32_t key, uint32_t* data, int len);
+size_t afind(uint32_t key, uint32_t* data, size_t len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
@@ -94,7 +94,7 @@ char* nalread(char* in, size_t* len, FILE* input)
 	return feof(input)?NULL:in;
 }
 
-int afind(uint32_t key, uint32_t* data, int len)
+size_t afind(uint32_t key, uint32_t* data, size_t len)
 {
 	if(len<=0||data[0]>=key)
 		return 0;
@@ -102,7 +102,7 @@ int afind(uint32_t key, uint32_t* data, int len)
 		return len;
 
 	float high;
-	int mid, dir;
+	size_t mid, dir;
 
 	high=(float)(data[len-1]-data[0]);
 	mid=(int)((((float)key-data[0])/high)*(float)(len-1));
