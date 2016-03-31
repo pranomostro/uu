@@ -33,7 +33,8 @@ uu is currently implemented in two languages:
 -the C version fnuu (false negatives uu) is rather an experiment if it is possible to write a
 	faster and more memory efficient version. while the awk program does
 	not make any errors, it saves all the input lines,
-	the C program only holds the 32-bit hashes for every input line.
+	the C program only holds the 32-bit hashes for every input line,
+	which makes it a lot less memory intensive.
 	the C version is also already slightly faster
 	than uu.awk when it is compiled with optimization,
 	and it is improved further.
