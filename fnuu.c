@@ -86,7 +86,7 @@ char* nalread(char* in, size_t* len, FILE* input)
 			break;
 		save=(*len);
 		(*len)*=2;
-		readlen*=(*len)-(in-readpos);
+		readlen*=2;
 		in=(char*)resize(in, sizeof(char)*save, sizeof(char)*(*len));
 		readpos=in+strnlen(in, *len);
 	}
