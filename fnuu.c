@@ -75,24 +75,24 @@ int main(void)
 
 char* nalread(char* in, size_t* len, FILE* input)
 {
-	size_t readlen=(*len-1)/2, save;
+	size_t readlen=(*len-1)/2;
 	char* readpos=in;
 
 	while(1)
 	{
-		if(fgets(readpos, readlen, input)==NULL) /*4094 chars are read*/
+		if(fgets(readpos, readlen, input)==NULL)
 			break;
 		if(readpos[strnlen(readpos, *len)-1]=='\n')
 			break;
-		save=(*len);
+		in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*((*len)*2));
 		(*len)*=2;
-		readlen*=2;
-		in=(char*)resize(in, sizeof(char)*save, sizeof(char)*(*len));
+		readlen=(*len)-strnlen(in, *len)-1;
 		readpos=in+strnlen(in, *len);
 	}
 
 	return feof(input)?NULL:in;
 }
+
 
 size_t afind(uint32_t key, uint32_t* data, size_t len)
 {
