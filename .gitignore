@@ -1,5 +1,6 @@
 #various files
 *test
+*zz*
 
 #binaries
 fnuu
@@ -8,3 +9,4 @@ fnuu
 #additional profiling information
 cov
 prof
+*.log

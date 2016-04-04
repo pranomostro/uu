@@ -16,18 +16,18 @@ uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 typedef struct
 {
 	uint32_t* entries;
-	size_t len, maxlen;
+	size_t len, cap;
 } Bucket;
 
 int main(void)
 {
-	int i, bucket, pos;
-	size_t inputsize=BUFSIZ;
+	int i;
+	size_t inputsize=BUFSIZ, pos, bucket;
 	uint32_t hashval;
 	char* input=(char*)calloc(inputsize, sizeof(char));
 	Bucket values[BUCKETS];
 
-	for(i=0; i<=BUCKETS-1; i++)
+	for(i=0; i<BUCKETS; i++)
 	{
 		values[i].entries=(uint32_t*)calloc(INITLEN, sizeof(uint32_t));
 		if(values[i].entries==NULL)
@@ -38,23 +38,23 @@ int main(void)
 			exit(1);
 		}
 		values[i].len=0;
-		values[i].maxlen=INITLEN;
+		values[i].cap=INITLEN;
 	}
 
 	while((input=nalread(input, &inputsize, stdin))!=NULL)
 	{
-		hashval=murmurhash(input, strlen(input), 0xA17A1111);
+		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		bucket=hashval%BUCKETS;
 		pos=afind(hashval, values[bucket].entries, values[bucket].len);
 
-		if(values[bucket].entries[pos]!=hashval)
+		if(pos==values[bucket].len||values[bucket].entries[pos]!=hashval)
 		{
-			if(values[bucket].len>=values[bucket].maxlen)
+			if(values[bucket].len>=values[bucket].cap)
 			{
-				values[bucket].maxlen=values[bucket].len*RESIZEFACTOR;
+				values[bucket].cap=values[bucket].len*RESIZEFACTOR;
 				values[bucket].entries=resize(values[bucket].entries,
 					values[bucket].len*sizeof(uint32_t),
-					values[bucket].maxlen*sizeof(uint32_t));
+					values[bucket].cap*sizeof(uint32_t));
 			}
 
 			memmove(values[bucket].entries+pos+1,
@@ -67,8 +67,9 @@ int main(void)
 		}
 	}
 
-	for(i=0; i<=BUCKETS-1; i++)
+	for(i=0; i<BUCKETS; i++)
 		free(values[i].entries);
+	free(input);
 
 	return 0;
 }
@@ -84,8 +85,8 @@ char* nalread(char* in, size_t* len, FILE* input)
 			break;
 		if(readpos[strnlen(readpos, *len)-1]=='\n')
 			break;
-		in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*((*len)*2));
-		(*len)*=2;
+		in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*((*len)*RESIZEFACTOR));
+		(*len)*=RESIZEFACTOR;
 		readlen=(*len)-strnlen(in, *len)-1;
 		readpos=in+strnlen(in, *len);
 	}
