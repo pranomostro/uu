@@ -5,11 +5,13 @@
 #include <string.h>
 #include <stdint.h>
 
+#define MIDCALC ((float)(key-data[low])/(float)(data[high]-data[low]))*(float)(high-low)+low
+
 #include "config.h"
 #include "deps/murmurhash/murmurhash.h"
 
 char* nalread(char* in, size_t* len, FILE* input);
-size_t afind(uint32_t key, uint32_t* data, size_t len);
+size_t abinfind(uint32_t key, uint32_t* data, size_t len);
 void* resize(void* data, size_t old, size_t new);
 uint32_t hash(const char *key, uint32_t len, uint32_t seed);
 
@@ -45,7 +47,7 @@ int main(void)
 	{
 		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=afind(hashval, values[bucket].entries, values[bucket].len);
+		pos=abinfind(hashval, values[bucket].entries, values[bucket].len);
 
 		if(pos==values[bucket].len||values[bucket].entries[pos]!=hashval)
 		{
@@ -94,29 +96,38 @@ char* nalread(char* in, size_t* len, FILE* input)
 	return feof(input)?NULL:in;
 }
 
-
-size_t afind(uint32_t key, uint32_t* data, size_t len)
+size_t abinfind(uint32_t key, uint32_t* data, size_t len)
 {
-	if(len<=0||data[0]>=key)
+	if(len<=0||key<=data[0])
 		return 0;
-	else if(data[len-1]<key)
+	else if(key>data[len-1])
 		return len;
 
-	float high;
-	size_t mid, dir;
+	signed int low, high, mid;
+	low=0;
+	high=len-1;
+	mid=MIDCALC;
 
-	high=(float)(data[len-1]-data[0]);
-	mid=(int)((((float)key-data[0])/high)*(float)(len-1));
+	while(low<=high&&data[mid]!=key)
+	{
+		if(data[low]>key)
+		{
+			mid=low-1;
+			break;
+		}
+		else if(data[high]<key)
+		{
+			mid=high+1;
+			break;
+		}
 
-	if(data[mid]<key)
-		dir=1;
-	else
-		dir=-1;
-
-	while(!(data[mid]>=key&&data[mid-1]<key))
-		mid+=dir;
-
-	return mid;
+		mid=MIDCALC;
+		if(data[mid]<key)
+			low=mid+1;
+		else
+			high=mid-1;
+	}
+	return data[mid]<key?mid+1:mid;
 }
 
 void* resize(void* data, size_t old, size_t new)
