@@ -4,8 +4,7 @@ PREFIX=/usr/local
 
 CC=cc
 
-CFLAGS=-Wall -Wextra -pedantic -O2
-LDFLAGS=-s
+CFLAGS=-Wall -Wextra -pedantic -O2 -s
 
 AWKTARGET=uu
 BIN=fnuu bauu

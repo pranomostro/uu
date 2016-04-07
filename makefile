@@ -3,10 +3,10 @@ include config.mk
 
 all: $(BIN) config.h
 
-fnuu: fnuu.c deps/murmurhash/murmurhash.c
+fnuu: nal.c fnuu.c deps/murmurhash/murmurhash.c
 	$(CC) $(CFLAGS) $^ -o $@
 
-bauu: bauu.c deps/murmurhash/murmurhash.c
+bauu: bauu.c nal.c deps/murmurhash/murmurhash.c
 	$(CC) $(CFLAGS) $^ -o $@ $
 
 clean:

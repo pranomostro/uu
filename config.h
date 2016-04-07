@@ -13,15 +13,20 @@
 
 /*for fnuu*/
 
-const int INITLEN=256;
-const int BUCKETS=10000;
+#define INITLEN 256
+#define BUCKETS 10000
 
 /*for bauu*/
 
-const int BALEN=134217728;
-const int BITSPERELEM=32;
-const int SHIFT=5;
+#define BALEN 134217728
+#define BITSPERELEM 32
+#define SHIFT 5
 
 /* The factor for resizing arrays and strings during input */
 
-const int RESIZEFACTOR=2;
+#define RESIZEFACTOR 2
+
+/*function definitions from nal.c*/
+
+char* nalread(char* in, size_t* len, FILE* input);
+void* resize(void* data, size_t old, size_t new);
