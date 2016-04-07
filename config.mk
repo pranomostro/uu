@@ -8,6 +8,6 @@ CFLAGS=-Wall -Wextra -pedantic -O2
 LDFLAGS=-s
 
 AWKTARGET=uu
-CTARGET=fnuu
+BIN=fnuu bauu
 
-OBJS=fnuu.o deps/murmurhash/murmurhash.o
+OBJ=fnuu.o bauu.o deps/murmurhash/murmurhash.o

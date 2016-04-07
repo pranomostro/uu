@@ -4,6 +4,7 @@
 
 #binaries
 fnuu
+bauu
 *.o
 
 #additional profiling information

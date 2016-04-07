@@ -25,19 +25,24 @@ to be adjacent.
 
 uu is currently implemented in two languages:
 
--the awk version is the recommended one. it is extremely simple
+-the awk version uu is the recommended one. it is extremely simple
 	to understand, memory safe, does not make any errors
 	and is in nearly every point the better one of these
 	two implementations, except the case of memory usage.
 
--the C version fnuu (false negatives uu) is rather an experiment if it is possible to write a
-	faster and more memory efficient version. while the awk program does
-	not make any errors, it saves all the input lines,
+-the C version fnuu (false negatives uu) is rather an experiment if it is
+	possible to write a faster and more memory efficient version. while
+	the awk program does not make any errors, it saves all the input lines,
 	the C program only holds the 32-bit hashes for every input line,
 	which makes it a lot less memory intensive.
 	the C version is also already slightly faster
-	than uu.awk when it is compiled with optimization,
+	than uu when it is compiled with optimization,
 	and it is improved further.
+
+-another version, bauu, also written in C, rather stores the hashes in a bitarray.
+	It uses 512Mb RAM constantly, and is twice as fast as the other two versions.
+	bauu hash the same hash collisions as fnuu, implying that it has the same
+	false negatives.
 
 Installation
 ------------

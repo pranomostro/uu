@@ -1,25 +1,26 @@
-#these two targets are annoying, but there was no better way.
+#these three targets are annoying, but there was no better way.
 include config.mk
 
-all: $(CTARGET)
+all: $(BIN) config.h
 
-$(CTARGET): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $(CTARGET)
+fnuu: fnuu.c deps/murmurhash/murmurhash.c
+	$(CC) $(CFLAGS) $^ -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+bauu: bauu.c deps/murmurhash/murmurhash.c
+	$(CC) $(CFLAGS) $^ -o $@ $
 
 clean:
-	rm -rf $(CTARGET) $(OBJS)
+	rm -rf $(BIN) $(OBJ)
 
-install: $(CTARGET)
+install: $(BIN)
 	mkdir -p $(PREFIX)/bin $(PREFIX)/share/man/man1
 	cp $(AWKTARGET) $(PREFIX)/bin
-	cp $(CTARGET) $(PREFIX)/bin
+	cp $(BIN) $(PREFIX)/bin
 	cp $(AWKTARGET).1 $(PREFIX)/share/man/man1
 	chmod 755 $(PREFIX)/bin/$(AWKTARGET)
 	chmod 755 $(PREFIX)/bin/$(CTARGET)
-	chmod 0644 $(PREFIX)/share/man/man1/$(AWKTARGET).1
+	chmod 644 $(PREFIX)/share/man/man1/$(AWKTARGET).1
 
 uninstall:
-	rm -f $(PREFIX)/$(AWKTARGET) $(PREFIX)/bin/$(CTARGET) $(PREFIX)/share/man/man1/$(AWKTARGET).1
+	rm -f $(PREFIX)/bin/$(AWKTARGET) $(PREFIX)/share/man/man1/$(AWKTARGET).1
+	cd $(PREFIX)/bin && rm -f $(BIN)
