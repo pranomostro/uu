@@ -1,4 +1,3 @@
-#these three targets are annoying, but there was no better way.
 include config.mk
 
 all: $(BIN) config.h
@@ -14,13 +13,11 @@ clean:
 
 install: $(BIN)
 	mkdir -p $(PREFIX)/bin $(PREFIX)/share/man/man1
-	cp $(AWKTARGET) $(PREFIX)/bin
-	cp $(BIN) $(PREFIX)/bin
+	cp $(AWKTARGET) $(BIN) $(PREFIX)/bin
 	cp $(AWKTARGET).1 $(PREFIX)/share/man/man1
-	chmod 755 $(PREFIX)/bin/$(AWKTARGET)
-	chmod 755 $(PREFIX)/bin/$(CTARGET)
+	cd $(PREFIX)/bin && chmod 755 $(BIN) $(AWKTARGET)
 	chmod 644 $(PREFIX)/share/man/man1/$(AWKTARGET).1
 
 uninstall:
-	rm -f $(PREFIX)/bin/$(AWKTARGET) $(PREFIX)/share/man/man1/$(AWKTARGET).1
-	cd $(PREFIX)/bin && rm -f $(BIN)
+	rm -f $(PREFIX)/share/man/man1/$(AWKTARGET).1
+	cd $(PREFIX)/bin && rm -f $(BIN) $(AWKTARGET)
