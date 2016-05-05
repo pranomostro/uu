@@ -24,7 +24,7 @@ int main(void)
 		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		if(!(bitarray[hashval>>SHIFT]&(1<<hashval%BITSPERELEM)))
 		{
-			printf(input);
+			fputs(input, stdout);
 			bitarray[hashval>>SHIFT]|=(1<<hashval%BITSPERELEM);
 		}
 	}
