@@ -6,17 +6,18 @@ uu \- unsorted uniq
 uu
 .br
 fnuu
+.br
+bauu
 
 .SH DESCRIPTION
 uu prints only the first occurrence of an input line.
-The input does not have to be sorted.
-Any arguments are ignored.
-fnuu is a faster, less memory intensive version
-of uu with false negatives.
-bauu is at least twice as fast as the other
-versions, but uses no more and no less than 512Mb per instance.
+The input does not have to be sorted. Any arguments are ignored.
+fnuu is a faster, less memory intensive version of uu with
+false negatives.
+bauu is at least twice as fast as the other versions, but uses
+no more and no less than 512Mb per instance.
 
-.SH EXAMPLE
+.SH EXAMPLES
 .TP
 .B echo -e 'naaas\enpaas\enras\enpaas\entaas' | uu | tr '\en' '|'
 prints
@@ -28,6 +29,10 @@ The awk version is too simple to contain any serious bugs,
 the C version was tested with uno and valgrind.
 .TP
 murmurhashes collide. the awk version uses too much memory.
+
+.SH "SEE ALSO"
+.IR uniq(1),
+.IR awk(1).
 
 .SH AUTHOR
 pranomestro@gmail.com
