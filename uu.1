@@ -18,15 +18,19 @@ bauu is at least twice as fast as the other versions, but uses
 no more and no less than 512Mb per instance.
 
 .SH EXAMPLES
-.P
-.B echo -e 'naaas\enpaas\enras\enpaas\entaas' | uu | tr '\en' '|'
+.PP
+.fi
+.RS
+$ echo -e 'naaas\enpaas\enras\enpaas\entaas' | uu | tr '\en' '|'
 .br
-.B naaas|paas|ras|taas
+naaas|paas|ras|taas
+.RE
+.fi
 
 .SH BUGS
 The awk version is too simple to contain any serious bugs,
 the C version was tested with uno and valgrind.
-.TP
+.PP
 murmurhashes collide. the awk version uses too much memory.
 
 .SH "SEE ALSO"
