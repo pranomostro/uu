@@ -1,4 +1,4 @@
-/*unsorted uniq with entries in an array of pointers, entries are inserted*/
+/*bitarray, hashed lines are set.*/
 
 #include <stdlib.h>
 #include <stdio.h>

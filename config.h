@@ -1,14 +1,14 @@
 /*
 	This file provides configuration
-	options for fnuu, which are mostly
+	options for uu, which are mostly
 	related to performance optimizations.
 */
 
 /*
 	The initial length of the buckets
-	an the number of buckets.
-	Increasing these numbers will increase
-	performance.
+	and the number of buckets.
+	Increasing these numbers will usually
+	increase performance.
 */
 
 /*for fnuu*/
