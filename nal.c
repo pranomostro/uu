@@ -15,7 +15,7 @@ char* nalread(char* in, size_t* len, FILE* input)
 			break;
 		if(readpos[strnlen(readpos, *len)-1]=='\n')
 			break;
-		in=(char*)resize(in, sizeof(char)*(*len), sizeof(char)*((*len)*RESIZEFACTOR));
+		in=(char*)nalgrow(in, sizeof(char)*(*len), sizeof(char)*((*len)*RESIZEFACTOR));
 		(*len)*=RESIZEFACTOR;
 		readlen=(*len)-strnlen(in, *len)-1;
 		readpos=in+strnlen(in, *len);
@@ -24,7 +24,7 @@ char* nalread(char* in, size_t* len, FILE* input)
 	return feof(input)?NULL:in;
 }
 
-void* resize(void* data, size_t old, size_t new)
+void* nalgrow(void* data, size_t old, size_t new)
 {
 	void* na=realloc(data, new);
 	if(na==NULL)
