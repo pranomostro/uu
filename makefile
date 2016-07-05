@@ -21,3 +21,5 @@ install: $(BIN)
 uninstall:
 	rm -f $(PREFIX)/share/man/man1/$(AWKTARGET).1
 	cd $(PREFIX)/bin && rm -f $(BIN) $(AWKTARGET)
+
+.PHONY: all clean install uninstall
