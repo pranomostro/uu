@@ -2,11 +2,12 @@ include config.mk
 
 all: $(BIN) config.h
 
-fnuu: nal.c fnuu.c deps/murmurhash/murmurhash.c
-	$(CC) $(CFLAGS) $^ -o $@
+fnuu: fnuu.o nal.o deps/murmurhash/murmurhash.o
 
-bauu: bauu.c nal.c deps/murmurhash/murmurhash.c
-	$(CC) $(CFLAGS) $^ -o $@
+bauu: bauu.o nal.o deps/murmurhash/murmurhash.o
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(BIN) $(OBJ)
