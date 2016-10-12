@@ -52,9 +52,8 @@ int main(void)
 			if(values[bucket].len>=values[bucket].cap)
 			{
 				values[bucket].cap=values[bucket].len*RESIZEFACTOR;
-				values[bucket].entries=nalgrow(values[bucket].entries,
-					values[bucket].len*sizeof(uint32_t),
-					values[bucket].cap*sizeof(uint32_t));
+				values[bucket].entries=reallocarray(values[bucket].entries,
+					values[bucket].cap*sizeof(uint32_t), sizeof(uint32_t));
 			}
 
 			memmove(values[bucket].entries+pos+1,
