@@ -1,12 +1,15 @@
+.POSIX:
+.PHONY: all clean install uninstall
+
 include config.mk
 
 all: $(BIN) config.h
 
-fnuu: fnuu.o nal.o reallocarray.o deps/murmurhash/murmurhash.o
-	$(CC) $(CFLAGS) fnuu.o nal.o reallocarray.o deps/murmurhash/murmurhash.o -o $@
+fnuu: fnuu.o nal.o reallocarray.o murmurhash.o
+	$(CC) $(CFLAGS) fnuu.o nal.o reallocarray.o murmurhash.o -o $@
 
-bauu: bauu.o nal.o reallocarray.o deps/murmurhash/murmurhash.o
-	$(CC) $(CFLAGS) bauu.o nal.o reallocarray.o deps/murmurhash/murmurhash.o -o $@
+bauu: bauu.o nal.o reallocarray.o murmurhash.o
+	$(CC) $(CFLAGS) bauu.o nal.o reallocarray.o murmurhash.o -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -25,4 +28,3 @@ uninstall:
 	rm -f $(PREFIX)/share/man/man1/$(AWKTARGET).1
 	cd $(PREFIX)/bin && rm -f $(BIN) $(AWKTARGET)
 
-.PHONY: all clean install uninstall

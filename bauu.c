@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 #include "config.h"
-#include "deps/murmurhash/murmurhash.h"
+#include "murmurhash.h"
 
 int main(void)
 {

@@ -8,7 +8,7 @@
 #define MIDCALC ((float)(key-data[low])/(float)(data[high]-data[low]))*(float)(high-low)+low
 
 #include "config.h"
-#include "deps/murmurhash/murmurhash.h"
+#include "murmurhash.h"
 
 size_t abinfind(uint32_t key, uint32_t* data, size_t len);
 
@@ -52,7 +52,7 @@ int main(void)
 			if(values[bucket].len>=values[bucket].cap)
 			{
 				values[bucket].cap=values[bucket].len*RESIZEFACTOR;
-				values[bucket].entries=reallocarray(values[bucket].entries,
+				values[bucket].entries=(uint32_t *)reallocarray(values[bucket].entries,
 					values[bucket].cap*sizeof(uint32_t), sizeof(uint32_t));
 			}
 

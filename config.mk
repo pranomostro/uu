@@ -9,4 +9,4 @@ CFLAGS=-Wall -Wextra -pedantic -O2 -s
 AWKTARGET=uu
 BIN=fnuu bauu
 
-OBJ=fnuu.o bauu.o nal.o reallocarray.o deps/murmurhash/murmurhash.o
+OBJ=fnuu.o bauu.o nal.o reallocarray.o murmurhash.o

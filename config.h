@@ -26,7 +26,7 @@
 
 #define RESIZEFACTOR 2
 
-/*function definitions from nal.c*/
+/*function definitions from nal.c and reallocarray.c*/
 
 char* nalread(char* in, size_t* len, FILE* input);
-void* nalgrow(void* data, size_t old, size_t new);
+void* reallocarray(void* optr, size_t nmemn, size_t size);
