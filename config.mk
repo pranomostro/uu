@@ -1,12 +1,15 @@
-#configure your build of uu
-
 PREFIX=/usr/local
 
 CC=cc
 
-CFLAGS=-Wall -Wextra -pedantic -O2 -s
+CFLAGS=-Wall -Wextra -std=c99 -pedantic -O2
+LDFLAGS=-s
 
-AWKTARGET=uu
-BIN=fnuu bauu
+NBT=uu
+BT=fnuu bauu
+NBO=nal.o reallocarray.o murmurhash.o
 
-OBJ=fnuu.o bauu.o nal.o reallocarray.o murmurhash.o
+MAN=uu.1
+CONF=config.h config.mk
+OBJ=$(BT:=.o) $(NBO)
+BIN=$(NBT) $(BT)

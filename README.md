@@ -1,48 +1,34 @@
 What for?
 =========
 
-uu can be used when you would like to apply uniq to an
-input but need to keep the order of the input lines or
-you don't want your entire input to be consumed before
-processing it (like with `sort | uniq`).
-For example, if you want have got a dictionary with the
-words sorted after frequency and you want to convert the
-dictionary to lowercase while keeping the order of the
-dictionary, you would write
+uu can be used when you would like to apply uniq to an input but need to
+keep the order of the input lines or you don't want your entire input to
+be consumed before processing it (like with `sort | uniq`).
+For example, if you want have got a dictionary with the words sorted
+after frequency and you want to convert the dictionary to lowercase
+while keeping the order of the dictionary, you would write:
 
 	tr 'A-Z' 'a-z' dict | uu >lcdict
 
-That's basically everything!
+This works especially well for huge text streams which would not fit
+into RAM for sorting.
 
-A small utility
----------------
+Versions
+--------
 
-uu is a text filter utility similar to the well known and
-loved uniq. The only real difference between uu and uniq
-is that in uniq, the second and succeding copies of repeated
-lines are removed, while with uu, the lines are not required
-to be adjacent.
+uu is currently implemented in three programs:
 
-uu is currently implemented in two languages:
-
--the awk version uu is the recommended one. it is extremely simple
-	to understand, memory safe, does not make any errors
-	and is in nearly every point the better one of these
-	two implementations, except the case of memory usage.
-
--the C version fnuu (false negatives uu) is rather an experiment if it is
-	possible to write a faster and more memory efficient version. while
-	the awk program does not make any errors, it saves all the input lines,
-	the C program only holds the 32-bit hashes for every input line,
-	which makes it a lot less memory intensive.
-	the C version is also already slightly faster
-	than uu when it is compiled with optimization,
-	and it is improved further.
-
--another version, bauu, also written in C, rather stores the hashes in a bitarray.
-	It uses 512Mb RAM constantly, and is twice as fast as the other two versions.
-	bauu hash the same hash collisions as fnuu, implying that it has the same
-	false negatives.
+-	uu is the recommended one. It is extremely simple
+	to understand, memory safe and does not make any errors.
+	It uses more memory than fnuu.
+-	fnuu (false negatives uu) is an experiment if it is possible to write
+	a faster and more memory efficient uu. uu saves the input lines in
+	RAM, while fnuu only stores their 32-bit hashes.
+	fnuu is written in C and slightly faster than uu.
+-	bauu is also written in C, stores the 32-bit hashes of the input lines
+	in a bitarray. It uses 512MB RAM constantly, and is twice as fast as the
+	other two versions. bauu hash the same hash collisions as fnuu, which
+	means that it has the same false negatives.
 
 Installation
 ------------
@@ -51,11 +37,9 @@ Just type
 
 	make install
 
-and enjoy the experience.
-
 Thanks and license
-------------------
+==================
 
-The whole thing is licensed under the MIT-license.
 Thanks to [jwerle](https://www.github.com/jwerle) for his
 implementation of murmurhash.
+Licensed under the [MIT license](./LICENSE).

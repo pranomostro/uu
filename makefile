@@ -1,30 +1,28 @@
-.POSIX:
-.PHONY: all clean install uninstall
-
 include config.mk
 
-all: $(BIN) config.h
+all: $(BIN)
 
-fnuu: fnuu.o nal.o reallocarray.o murmurhash.o
-	$(CC) $(CFLAGS) fnuu.o nal.o reallocarray.o murmurhash.o -o $@
+$(BIN): $(OBJ)
+$(OBJ): $(CONF)
 
-bauu: bauu.o nal.o reallocarray.o murmurhash.o
-	$(CC) $(CFLAGS) bauu.o nal.o reallocarray.o murmurhash.o -o $@
+.o:
+	$(CC) $(LDFLAGS) -o $@ $< $(NBO)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+.c.o:
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf $(BIN) $(OBJ)
+	rm -f $(BT) $(OBJ)
 
-install: $(BIN)
-	mkdir -p $(PREFIX)/bin $(PREFIX)/share/man/man1
-	cp $(AWKTARGET) $(BIN) $(PREFIX)/bin
-	cp $(AWKTARGET).1 $(PREFIX)/share/man/man1
-	cd $(PREFIX)/bin && chmod 755 $(BIN) $(AWKTARGET)
-	chmod 644 $(PREFIX)/share/man/man1/$(AWKTARGET).1
+install: all
+	mkdir -p $(PREFIX)/bin/
+	cp $(BIN) $(PREFIX)/bin/
+	cp $(MAN) $(PREFIX)/share/man/man1/
+	cd $(PREFIX)/bin/ && chmod 755 $(BIN)
+	cd $(PREFIX)/share/man/man1/ && chmod 644 $(MAN)
 
 uninstall:
-	rm -f $(PREFIX)/share/man/man1/$(AWKTARGET).1
-	cd $(PREFIX)/bin && rm -f $(BIN) $(AWKTARGET)
+	cd $(PREFIX)/bin/ && rm -f $(BIN)
+	cd $(PREFIX)/share/man/man1/ && rm -f $(MAN)
 
+.PHONY: all clean install uninstall
