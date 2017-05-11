@@ -1,43 +1,60 @@
-.TH UU 1
-.SH NAME
-uu \- unsorted uniq
+.Dd May 11, 2017
+.Dt UU 1
+.Os
 
-.SH SYNOPSIS
-uu
-.br
-fnuu
-.br
-bauu
+.Sh NAME
+.Nm bauu ,
+.Nm fnuu ,
+.Nm uu ,
+.Nd unsorted uniq
 
-.SH DESCRIPTION
-uu prints only the first occurrence of an input line. The input does
-not have to be sorted. Any arguments are ignored.
+.Sh SYNOPSIS
+.Nm bauu
+.Nm fnuu
+.Nm uu
 
-fnuu is a faster, less memory intensive version of uu with false
-negatives (lines that haven't been in the input have a slim chance
-not to be printed).
+.Sh DESCRIPTION
+.Nm uu
+reads stdin and prints only the first occurrence of each input line.
+The input does not have to be sorted. Any arguments are ignored.
+.Pp
+.Nm fnuu
+is a faster, less memory intensive version of uu with with false negatives
+(lines that haven't been in the input have a slim chance not to be printed).
+.Pp
+.Nm bauu
+has the false negatives of fnuu, but uses constant memory (512 MB) and is
+at least twice as fast as the  other two versions.
 
-bauu has the same false negatives of fnuu, but uses constant memory
-(512MB) and is at least twice as fast as the other two versions.
+.Sh EXAMPLES
+Remove duplicate, non-adjacent lines (works with
+.Nm fnuu
+and
+.Nm bauu
+as well):
+.Pp
+.Dl $ echo -e 'naaas\enpaas\enras\enpaas\entaas' | uu
+.Dl naaas
+.Dl paas
+.Dl ras
+.Dl taas
 
-.SH EXAMPLES
-.PP
-.fi
-.RS
-$ echo -e 'naaas\enpaas\enras\enpaas\entaas' | uu | tr '\en' '|'
-.br
-naaas|paas|ras|taas
-.RE
-.fi
+.Sh EXIT STATUS
+.Ex -std
 
-.SH BUGS
-uu uses too much memory.
-.PP
-fnuu and bauu have too many false negatives.
+.Sh BUGS
+.Nm uu
+uses too much memory.
+.Pp
+.Nm fnuu
+and
+.Nm bauu
+have too many false negatives.
 
-.SH "SEE ALSO"
-.IR uniq(1),
-.IR awk(1).
+.Sh SEE ALSO
+.Xr awk 1
+.Xr echo 1 ,
+.Xr uniq 1 .
 
-.SH AUTHOR
-pranomestro@gmail.com
+.Sh AUTHORS
+.An pranomostro Aq Mt pranomestro@gmail.com

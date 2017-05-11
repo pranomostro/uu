@@ -9,7 +9,7 @@ NBT=uu
 BT=fnuu bauu
 NBO=nal.o reallocarray.o murmurhash.o
 
-MAN=uu.1
-CONF=config.h config.mk
-OBJ=$(BT:=.o) $(NBO)
 BIN=$(NBT) $(BT)
+MAN=$(NBT:=.1)
+OBJ=$(BT:=.o) $(NBO)
+CONF=config.h config.mk
