@@ -40,6 +40,6 @@ Just type
 Thanks and license
 ==================
 
-Thanks to [jwerle](https://www.github.com/jwerle) for his
-implementation of murmurhash.
+Thanks to [jwerle](https://www.github.com/jwerle) for his implementation
+of murmurhash (copyright notice in the file [MMHLICENSE](./MMHLICENSE).
 Licensed under the [MIT license](./LICENSE).
