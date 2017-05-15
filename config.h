@@ -28,5 +28,5 @@
 
 /*function definitions from nal.c and reallocarray.c*/
 
-char* nalread(char* in, size_t* len, FILE* input);
+size_t nalread(char** in, size_t* len, FILE* input);
 void* reallocarray(void* optr, size_t nmemn, size_t size);

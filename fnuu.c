@@ -23,7 +23,7 @@ int main(void)
 	int i;
 	size_t inputsize=BUFSIZ, pos, bucket;
 	uint32_t hashval;
-	char* input=(char*)calloc(inputsize, sizeof(char)), * rp;
+	char* input=(char*)calloc(inputsize, sizeof(char));
 	Bucket values[BUCKETS];
 
 	for(i=0; i<BUCKETS; i++)
@@ -40,9 +40,8 @@ int main(void)
 		values[i].cap=INITLEN;
 	}
 
-	while((rp=nalread(input, &inputsize, stdin))!=NULL)
+	while(nalread(&input, &inputsize, stdin)&&!feof(stdin))
 	{
-		input=rp;
 		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		bucket=hashval%BUCKETS;
 		pos=abinfind(hashval, values[bucket].entries, values[bucket].len);

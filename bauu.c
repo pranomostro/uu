@@ -13,15 +13,14 @@ int main(void)
 	int i;
 	size_t inputsize=BUFSIZ;
 	uint32_t hashval;
-	char* input=(char*)calloc(inputsize, sizeof(char)), * rp;
+	char* input=(char*)calloc(inputsize, sizeof(char));
 	uint32_t* bitarray=calloc(BALEN, sizeof(uint32_t));
 
 	for(i=0; i<BALEN; i++)
 		bitarray[i]&=0;
 
-	while((rp=nalread(input, &inputsize, stdin))!=NULL)
+	while(nalread(&input, &inputsize, stdin)&&!feof(stdin))
 	{
-		input=rp;
 		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		if(!(bitarray[hashval>>SHIFT]&(1<<hashval%BITSPERELEM)))
 		{
