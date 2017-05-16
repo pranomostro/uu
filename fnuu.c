@@ -5,18 +5,61 @@
 #include <string.h>
 #include <stdint.h>
 
-#define MIDCALC ((float)(key-data[low])/(float)(data[high]-data[low]))*(float)(high-low)+low
-
 #include "config.h"
 #include "murmurhash.h"
 
-size_t abinfind(uint32_t key, uint32_t* data, size_t len);
+size_t midcalc(uint32_t key, uint32_t* data, size_t high, size_t low);
+size_t ifind(uint32_t key, uint32_t* data, size_t len);
 
 typedef struct
 {
 	uint32_t* entries;
 	size_t len, cap;
 } Bucket;
+
+size_t midcalc(uint32_t key, uint32_t* data, size_t high, size_t low)
+{
+	if(data[high]==data[low])
+		return low;
+	float kld=key-data[low], hld=data[high]-data[low];
+	double hl=high-low;
+	return (kld/hld)*hl+low;
+}
+
+
+size_t ifind(uint32_t key, uint32_t* data, size_t len)
+{
+	if(len<=0||key<=data[0])
+		return 0;
+	else if(key>data[len-1])
+		return len;
+
+	size_t low, high, mid;
+	low=0;
+	high=len-1;
+	mid=midcalc(key, data, high, low);
+
+	while(low<=high&&data[mid]!=key)
+	{
+		if(data[low]>key)
+		{
+			mid=low-1;
+			break;
+		}
+		else if(data[high]<key)
+		{
+			mid=high+1;
+			break;
+		}
+
+		mid=midcalc(key, data, high, low);
+		if(data[mid]<key)
+			low=mid+1;
+		else
+			high=mid-1;
+	}
+	return data[mid]<key?mid+1:mid;
+}
 
 int main(void)
 {
@@ -44,7 +87,7 @@ int main(void)
 	{
 		hashval=murmurhash(input, strnlen(input, inputsize), 0xA17A1111);
 		bucket=hashval%BUCKETS;
-		pos=abinfind(hashval, values[bucket].entries, values[bucket].len);
+		pos=ifind(hashval, values[bucket].entries, values[bucket].len);
 
 		if(pos==values[bucket].len||values[bucket].entries[pos]!=hashval)
 		{
@@ -70,38 +113,4 @@ int main(void)
 	free(input);
 
 	return 0;
-}
-
-size_t abinfind(uint32_t key, uint32_t* data, size_t len)
-{
-	if(len<=0||key<=data[0])
-		return 0;
-	else if(key>data[len-1])
-		return len;
-
-	signed int low, high, mid;
-	low=0;
-	high=len-1;
-	mid=MIDCALC;
-
-	while(low<=high&&data[mid]!=key)
-	{
-		if(data[low]>key)
-		{
-			mid=low-1;
-			break;
-		}
-		else if(data[high]<key)
-		{
-			mid=high+1;
-			break;
-		}
-
-		mid=MIDCALC;
-		if(data[mid]<key)
-			low=mid+1;
-		else
-			high=mid-1;
-	}
-	return data[mid]<key?mid+1:mid;
 }

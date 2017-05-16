@@ -2,7 +2,7 @@ PREFIX=/usr/local
 
 CC=cc
 
-CFLAGS=-Wall -Wextra -std=c99 -pedantic -O2
+CFLAGS=-D_DEFAULT_SOURCE -Wall -Wextra -std=c99 -pedantic -O2
 LDFLAGS=-s
 
 NBT=uu
