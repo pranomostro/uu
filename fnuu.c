@@ -26,7 +26,6 @@ size_t midcalc(uint32_t key, uint32_t* data, size_t high, size_t low)
 	return (kld/hld)*hl+low;
 }
 
-
 size_t ifind(uint32_t key, uint32_t* data, size_t len)
 {
 	if(len<=0||key<=data[0])
