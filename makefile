@@ -5,6 +5,9 @@ all: $(BIN)
 $(BIN): $(OBJ)
 $(OBJ): $(CONF)
 
+config.h:
+	cp config.def.h $@
+
 .o:
 	$(CC) $(LDFLAGS) -o $@ $< $(NBO)
 
