@@ -1,5 +1,5 @@
-What for?
-=========
+Unsorted uniq
+=============
 
 uu can be used when you would like to apply uniq to an input but need to
 keep the order of the input lines or you don't want your entire input to
